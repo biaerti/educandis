@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finansowanie KFS – Educandis</title>
+  <meta name="description" content="Dowiedz się jak uzyskać dofinansowanie szkoleń z Krajowego Funduszu Szkoleniowego. Educandis pomaga przejść przez cały proces – od wniosku po certyfikat." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+
+  <style>
+    /* ---- Page hero ---- */
+    .page-hero {
+      background: var(--color-dark);
+      padding-block: 130px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(227,66,52,.12) 0%, transparent 65%);
+      top: -200px; right: -100px;
+      pointer-events: none;
+    }
+    .page-hero-inner { position: relative; z-index: 1; }
+    .page-hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--color-white);
+      margin-top: 12px;
+      margin-bottom: 14px;
+    }
+    .page-hero-desc {
+      font-size: 1rem;
+      color: rgba(255,255,255,.6);
+      max-width: 500px;
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .8rem;
+      color: rgba(255,255,255,.38);
+      margin-bottom: 16px;
+    }
+    .breadcrumb a { color: rgba(255,255,255,.55); transition: color .2s; }
+    .breadcrumb a:hover { color: var(--color-primary); }
+    .breadcrumb i { font-size: .65rem; }
+
+    /* ---- What is KFS ---- */
+    .what-kfs {
+      padding-block: 80px;
+      background: var(--color-white);
+    }
+    .what-kfs-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .what-kfs-img {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+    }
+    .what-kfs-img img { width: 100%; display: block; }
+    .what-kfs-img-badge {
+      position: absolute;
+      bottom: 20px; left: 20px;
+      background: var(--color-primary);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: .9rem;
+      box-shadow: var(--shadow-md);
+    }
+    .what-kfs-img-badge span {
+      font-size: 1.6rem;
+      font-weight: 800;
+      display: block;
+      line-height: 1;
+    }
+
+    /* ---- Who can ---- */
+    .who-can {
+      padding-block: 80px;
+      background: var(--color-light-bg);
+    }
+    .who-can-header { text-align: center; margin-bottom: 52px; }
+    .who-can-header .section-subtitle { margin-inline: auto; }
+
+    .who-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .who-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: 32px 26px;
+      border: 1.5px solid var(--color-gray-light);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .who-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .who-card-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+    .who-card-title {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-dark);
+      margin-bottom: 10px;
+    }
+    .who-card-desc {
+      font-size: .85rem;
+      color: var(--color-text-muted);
+      line-height: 1.65;
+    }
+    .who-card-highlight {
+      margin-top: 14px;
+      padding: 8px 14px;
+      background: rgba(227,66,52,.08);
+      border-radius: var(--radius-sm);
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+
+    /* ---- Process ---- */
+    .process {
+      padding-block: 96px;
+      background: var(--color-white);
+    }
+    .process-header { text-align: center; margin-bottom: 60px; }
+    .process-header .section-subtitle { margin-inline: auto; }
+
+    .process-timeline {
+      position: relative;
+      max-width: 740px;
+      margin-inline: auto;
+    }
+    .process-timeline::before {
+      content: '';
+      position: absolute;
+      left: 27px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--color-primary), var(--color-gray-light));
+    }
+
+    .process-step {
+      display: flex;
+      gap: 28px;
+      margin-bottom: 0;
+      position: relative;
+    }
+    .process-step-icon {
+      flex-shrink: 0;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--color-white);
+      border: 2px solid var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      position: relative;
+      z-index: 1;
+      transition: background .3s, color .3s;
+    }
+    .process-step:hover .process-step-icon {
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .process-step-body {
+      padding-bottom: 40px;
+      padding-top: 12px;
+    }
+    .process-step-title {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-dark);
+      margin-bottom: 8px;
+    }
+    .process-step-desc {
+      font-size: .88rem;
+      color: var(--color-text-muted);
+      line-height: 1.65;
+    }
+    .process-step-tip {
+      margin-top: 10px;
+      font-size: .8rem;
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+    .process-step-tip i { margin-right: 4px; }
+
+    /* ---- FAQ ---- */
+    .faq-section {
+      padding-block: 80px;
+      background: var(--color-light-bg);
+    }
+    .faq-header { text-align: center; margin-bottom: 52px; }
+
+    .faq-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .faq-item {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--color-gray-light);
+      overflow: hidden;
+      transition: border-color .25s;
+    }
+    .faq-item.open { border-color: var(--color-primary); }
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 20px;
+      cursor: pointer;
+      font-family: var(--font-heading);
+      font-size: .92rem;
+      font-weight: 600;
+      color: var(--color-dark);
+      user-select: none;
+    }
+    .faq-question-icon {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--color-gray-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: .75rem;
+      color: var(--color-text-muted);
+      transition: background .25s, color .25s, transform .3s;
+    }
+    .faq-item.open .faq-question-icon {
+      background: var(--color-primary);
+      color: #fff;
+      transform: rotate(45deg);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s ease;
+    }
+    .faq-answer-inner {
+      padding: 0 20px 18px;
+      font-size: .86rem;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+    }
+
+    /* ---- Financing grid ---- */
+    .financing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 40px;
+    }
+    .financing-card {
+      background: rgba(255,255,255,.06);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .financing-card-title {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .financing-card-pct {
+      font-family: var(--font-heading);
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--color-primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .financing-card p {
+      font-size: .84rem;
+      color: rgba(255,255,255,.45);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1024px) {
+      .what-kfs-inner { grid-template-columns: 1fr; gap: 40px; }
+      .who-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .who-grid { grid-template-columns: 1fr; }
+      .faq-cols { grid-template-columns: 1fr; }
+      .financing-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PAGE LOADER -->
+<div id="page-loader">
+  <div class="loader-logo">Edu<span>candis</span></div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- MOBILE NAV -->
+<nav class="mobile-nav">
+  <a href="index.html">Strona główna</a>
+  <a href="kursy.html">Kursy</a>
+  <a href="finansowanie.html">Finansowanie KFS</a>
+  <a href="powiat.html">Sprawdź nabory</a>
+  <a href="kontakt.html">Kontakt</a>
+  <a href="powiat.html" class="btn btn-primary">Sprawdź nabory KFS</a>
+</nav>
+
+<!-- NAVBAR -->
+<header class="navbar" role="banner">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <img src="Logo/EDUCANDIS_samo.png" alt="Logo Educandis" />
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#uslugi">Usługi</a>
+      <a href="kursy.html">Kursy</a>
+      <a href="finansowanie.html" style="color: var(--color-primary)">Finansowanie KFS</a>
+      <a href="powiat.html">Sprawdź nabory</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+    <a href="powiat.html" class="btn btn-primary nav-cta">
+      Sprawdź nabory KFS <i class="fa-solid fa-arrow-right"></i>
+    </a>
+    <button class="hamburger" aria-label="Otwórz menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Strona główna</a>
+      <i class="fa-solid fa-chevron-right"></i>
+      <span>Finansowanie KFS</span>
+    </div>
+    <span class="section-label">Krajowy Fundusz Szkoleniowy</span>
+    <h1 class="page-hero-title">KFS pokrywa nawet 80%<br />kosztów szkolenia</h1>
+    <p class="page-hero-desc">
+      Pomagamy firmom uzyskać dofinansowanie z Krajowego Funduszu Szkoleniowego –
+      złożyć wniosek, przejść przez formalności i przeprowadzamy samo szkolenie.
+    </p>
+  </div>
+</section>
+
+<!-- WHAT IS KFS -->
+<section class="what-kfs">
+  <div class="container">
+    <div class="what-kfs-inner">
+
+      <div class="reveal-left">
+        <span class="section-label">Czym jest KFS?</span>
+        <h2 class="section-title">Krajowy Fundusz Szkoleniowy</h2>
+        <p class="section-subtitle">
+          KFS to środki z Funduszu Pracy, z których pracodawca może sfinansować
+          szkolenia swoich pracowników. Pracodawca składa wniosek do Powiatowego
+          Urzędu Pracy i – jeśli decyzja jest pozytywna – KFS pokrywa koszty szkolenia.
+          My pomagamy przez cały proces i sami realizujemy szkolenia.
+        </p>
+        <ul style="margin-top:24px;display:flex;flex-direction:column;gap:12px;">
+          <li style="display:flex;gap:12px;align-items:flex-start;">
+            <i class="fa-solid fa-circle-check" style="color:var(--color-primary);margin-top:2px;flex-shrink:0"></i>
+            <span style="font-size:.9rem;color:var(--color-text-muted)">
+              Finansowanie kursów, szkoleń i egzaminów dla pracowników i pracodawców
+            </span>
+          </li>
+          <li style="display:flex;gap:12px;align-items:flex-start;">
+            <i class="fa-solid fa-circle-check" style="color:var(--color-primary);margin-top:2px;flex-shrink:0"></i>
+            <span style="font-size:.9rem;color:var(--color-text-muted)">
+              Środki dostępne dla firm każdej wielkości – od jednoosobowych po duże przedsiębiorstwa
+            </span>
+          </li>
+          <li style="display:flex;gap:12px;align-items:flex-start;">
+            <i class="fa-solid fa-circle-check" style="color:var(--color-primary);margin-top:2px;flex-shrink:0"></i>
+            <span style="font-size:.9rem;color:var(--color-text-muted)">
+              Wnioski składane w Powiatowym Urzędzie Pracy właściwym dla siedziby firmy
+            </span>
+          </li>
+          <li style="display:flex;gap:12px;align-items:flex-start;">
+            <i class="fa-solid fa-circle-check" style="color:var(--color-primary);margin-top:2px;flex-shrink:0"></i>
+            <span style="font-size:.9rem;color:var(--color-text-muted)">
+              Educandis posiada wpis do Rejestru Instytucji Szkoleniowych – Twoje szkolenie
+              kwalifikuje się do dofinansowania
+            </span>
+          </li>
+        </ul>
+        <a href="kursy.html" class="btn btn-primary" style="margin-top:28px">
+          Przeglądaj kwalifikujące się kursy <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="what-kfs-img reveal-right">
+        <img src="Zdjecia/AdobeStock_282835056.jpeg" alt="Szkolenie zawodowe" loading="lazy" />
+        <div class="what-kfs-img-badge">
+          <span>80%</span>dofinansowania<br />dla firm
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHO CAN -->
+<section class="who-can">
+  <div class="container">
+    <div class="who-can-header">
+      <span class="section-label reveal">Dla kogo?</span>
+      <h2 class="section-title reveal delay-1">Kto może wnioskować o KFS?</h2>
+      <p class="section-subtitle reveal delay-2">
+        O dofinansowanie może wnioskować każda firma zatrudniająca pracowników –
+        wniosek składa pracodawca do Powiatowego Urzędu Pracy.
+      </p>
+    </div>
+
+    <div class="who-grid">
+      <div class="who-card reveal">
+        <div class="who-card-icon">🏢</div>
+        <div class="who-card-title">Mikroprzedsiębiorcy</div>
+        <div class="who-card-desc">
+          Firmy zatrudniające do 9 pracowników mogą ubiegać się
+          o dofinansowanie na preferencyjnych warunkach.
+        </div>
+        <div class="who-card-highlight">Do 100% kosztów szkolenia</div>
+      </div>
+      <div class="who-card reveal delay-1">
+        <div class="who-card-icon">🏭</div>
+        <div class="who-card-title">Małe i średnie firmy</div>
+        <div class="who-card-desc">
+          Przedsiębiorstwa zatrudniające od 10 do 249 pracowników mogą
+          ubiegać się o zwrot kosztów kształcenia.
+        </div>
+        <div class="who-card-highlight">Do 80% kosztów szkolenia</div>
+      </div>
+      <div class="who-card reveal delay-2">
+        <div class="who-card-icon">🏗️</div>
+        <div class="who-card-title">Duże przedsiębiorstwa</div>
+        <div class="who-card-desc">
+          Firmy powyżej 250 pracowników również mogą korzystać
+          ze środków KFS na kształcenie ustawiczne.
+        </div>
+        <div class="who-card-highlight">Do 80% kosztów szkolenia</div>
+      </div>
+    </div>
+
+    <!-- Financing breakdown -->
+    <div style="background:var(--color-dark);border-radius:var(--radius-lg);padding:40px;margin-top:40px;" class="reveal">
+      <div style="text-align:center;margin-bottom:28px;">
+        <span class="section-label" style="color:#ff9089">Podział kosztów</span>
+        <h3 style="font-family:var(--font-heading);font-size:1.4rem;font-weight:700;color:#fff;margin-top:8px">
+          Jak wygląda finansowanie?
+        </h3>
+      </div>
+      <div class="financing-grid">
+        <div class="financing-card">
+          <div class="financing-card-pct">80%</div>
+          <div class="financing-card-title">Środki z KFS</div>
+          <p>Urząd Pracy refunduje pracodawcy do 80% kosztów kształcenia ustawicznego (mikroprzedsiębiorcy do 100%).</p>
+        </div>
+        <div class="financing-card">
+          <div class="financing-card-pct">20%</div>
+          <div class="financing-card-title">Wkład własny pracodawcy</div>
+          <p>Pracodawca pokrywa pozostałe 20% kosztów. Wkładu własnego nie może wnosić pracownik.</p>
+        </div>
+        <div class="financing-card">
+          <div class="financing-card-pct">100%</div>
+          <div class="financing-card-title">Mikroprzedsiębiorcy</div>
+          <p>Firmy zatrudniające do 9 osób mogą uzyskać dofinansowanie pokrywające 100% kosztów szkolenia.</p>
+        </div>
+        <div class="financing-card">
+          <div class="financing-card-pct">300%</div>
+          <div class="financing-card-title">Limit na pracownika</div>
+          <p>Kwota dofinansowania na jednego pracownika nie może przekraczać 300% przeciętnego wynagrodzenia.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="container">
+    <div class="process-header">
+      <span class="section-label reveal">Jak to działa?</span>
+      <h2 class="section-title reveal delay-1">Krok po kroku do dofinansowania</h2>
+      <p class="section-subtitle reveal delay-2">
+        Przeprowadzimy Cię przez każdy etap procesu aplikacji o środki z KFS.
+        Nie musisz znać się na formalności – to nasza rola.
+      </p>
+    </div>
+
+    <div class="process-timeline">
+      <div class="process-step reveal">
+        <div class="process-step-icon">1</div>
+        <div class="process-step-body">
+          <div class="process-step-title">Wybierz szkolenie z naszej oferty</div>
+          <div class="process-step-desc">
+            Przejrzyj dostępne kursy i wybierz te, które odpowiadają potrzebom Twojej firmy.
+            Wszystkie nasze kursy spełniają wymagania KFS – jesteśmy wpisani do Rejestru
+            Instytucji Szkoleniowych.
+          </div>
+          <div class="process-step-tip">
+            <i class="fa-solid fa-lightbulb"></i>
+            Wskazówka: Wybierz kursy związane z zakresem działalności firmy – zwiększa to szansę na dofinansowanie.
+          </div>
+        </div>
+      </div>
+      <div class="process-step reveal delay-1">
+        <div class="process-step-icon">2</div>
+        <div class="process-step-body">
+          <div class="process-step-title">Skontaktuj się z nami</div>
+          <div class="process-step-desc">
+            Zadzwoń lub napisz do nas. Przygotujemy dla Ciebie bezpłatną ofertę
+            i sprawdzimy, ile możesz uzyskać z KFS. Pomożemy wypełnić wszystkie wymagane
+            dokumenty: wniosek, program szkolenia i umowę.
+          </div>
+          <div class="process-step-tip">
+            <i class="fa-solid fa-lightbulb"></i>
+            Wskazówka: Złóż wniosek z wyprzedzeniem – urzędy rozpatrują je w kolejności wpływu.
+          </div>
+        </div>
+      </div>
+      <div class="process-step reveal delay-2">
+        <div class="process-step-icon">3</div>
+        <div class="process-step-body">
+          <div class="process-step-title">Złóż wniosek w Urzędzie Pracy</div>
+          <div class="process-step-desc">
+            Wniosek składa pracodawca w Powiatowym Urzędzie Pracy właściwym dla siedziby firmy.
+            Możliwe złożenie online przez platformę praca.gov.pl lub osobiście.
+            Urząd ma 30 dni na rozpatrzenie wniosku.
+          </div>
+        </div>
+      </div>
+      <div class="process-step reveal delay-1">
+        <div class="process-step-icon">4</div>
+        <div class="process-step-body">
+          <div class="process-step-title">Podpisz umowę z Urzędem Pracy</div>
+          <div class="process-step-desc">
+            Po pozytywnej decyzji Urząd Pracy podpisuje z pracodawcą umowę trójstronną
+            (pracodawca, urząd, instytucja szkoleniowa). Dopiero wtedy można rozpocząć szkolenie.
+          </div>
+          <div class="process-step-tip">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            Ważne: Nie zaczynaj szkolenia przed podpisaniem umowy z urzędem – inaczej nie otrzymasz dofinansowania.
+          </div>
+        </div>
+      </div>
+      <div class="process-step reveal delay-2">
+        <div class="process-step-icon">5</div>
+        <div class="process-step-body">
+          <div class="process-step-title">Ukończ szkolenie i odbierz certyfikat</div>
+          <div class="process-step-desc">
+            Uczestnik uczestniczy w szkoleniu i zdaje egzamin końcowy. Wydajemy certyfikat
+            potwierdzający ukończenie kursu, wpisany do Krajowego Rejestru Szkoleń.
+          </div>
+        </div>
+      </div>
+      <div class="process-step reveal delay-1">
+        <div class="process-step-icon">6</div>
+        <div class="process-step-body">
+          <div class="process-step-title">Rozliczenie i refundacja</div>
+          <div class="process-step-desc">
+            Pracodawca składa rozliczenie do Urzędu Pracy. Po pozytywnej weryfikacji
+            Urząd przelewa środki na konto pracodawcy lub bezpośrednio do instytucji szkoleniowej.
+            My zajmujemy się całą dokumentacją rozliczeniową.
+          </div>
+          <div class="process-step-tip">
+            <i class="fa-solid fa-lightbulb"></i>
+            Wskazówka: Archiwizuj dokumenty przez minimum 5 lat na wypadek kontroli.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:48px;" class="reveal">
+      <a href="kontakt.html" class="btn btn-primary btn-lg" style="padding:16px 36px;font-size:1rem">
+        <i class="fa-solid fa-phone"></i> Umów bezpłatną konsultację
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="faq-header">
+      <span class="section-label reveal">FAQ</span>
+      <h2 class="section-title reveal delay-1">Najczęstsze pytania o KFS</h2>
+    </div>
+
+    <div class="faq-cols">
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question">
+            Kto może złożyć wniosek o dofinansowanie z KFS?
+            <span class="faq-question-icon"><i class="fa-solid fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Wniosek może złożyć każdy pracodawca w rozumieniu Kodeksu pracy, czyli podmiot
+              zatrudniający co najmniej jednego pracownika. Wniosek składa pracodawca,
+              nie pracownik.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            Jakie szkolenia można sfinansować z KFS?
+            <span class="faq-question-icon"><i class="fa-solid fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Dofinansowanie obejmuje: kursy i studia podyplomowe realizowane z inicjatywy pracodawcy
+              lub za jego zgodą, egzaminy umożliwiające uzyskanie certyfikatów, a także badania lekarskie
+              i psychologiczne wymagane do udziału w szkoleniu.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            Ile wynosi maksymalna kwota dofinansowania?
+            <span class="faq-question-icon"><i class="fa-solid fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Kwota dofinansowania na jedną osobę nie może przekroczyć 300% przeciętnego wynagrodzenia
+              w danym roku. W 2025 roku to ok. 22 000 zł na jedną osobę. Mikroprzedsiębiorcy mogą
+              uzyskać do 100%, pozostałe firmy do 80% kosztów.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            Czy pracownik może sam złożyć wniosek?
+            <span class="faq-question-icon"><i class="fa-solid fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Nie. Wniosek zawsze składa pracodawca. Pracownik może jednak wystąpić z inicjatywą
+              do pracodawcy, by ten złożył wniosek w jego imieniu. Wkładu własnego nie może
+              wnosić pracownik – ponosi go wyłącznie pracodawca.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question">
+            Kiedy złożyć wniosek?
+            <span class="faq-question-icon"><i class="fa-solid fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Wnioski można składać przez cały rok, jednak pule środków są ograniczone i wnioski
+              rozpatrywane są w kolejności wpływu. Zalecamy składanie wniosków na początku roku –
+              środki najczęściej kończą się przed końcem roku budżetowego.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            Czy można sfinansować szkolenia online?
+            <span class="faq-question-icon"><i class="fa-solid fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Tak, szkolenia w formie e-learningowej są dopuszczalne pod warunkiem,
+              że instytucja szkoleniowa jest wpisana do Rejestru Instytucji Szkoleniowych.
+              Educandis posiada taki wpis, więc nasze kursy online kwalifikują się do dofinansowania.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            Jak długo czeka się na decyzję?
+            <span class="faq-question-icon"><i class="fa-solid fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Powiatowy Urząd Pracy ma 30 dni na rozpatrzenie wniosku. W praktyce czas oczekiwania
+              może być krótszy lub dłuższy w zależności od urzędu i puli dostępnych środków.
+              Zalecamy wcześniejsze planowanie szkoleń.
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            Co jeśli pracownik odejdzie po szkoleniu?
+            <span class="faq-question-icon"><i class="fa-solid fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Pracodawca może w umowie z pracownikiem zabezpieczyć się klauzulą lojalnościową,
+              zobowiązującą pracownika do zwrotu kosztów szkolenia proporcjonalnie do czasu,
+              który pozostał do upłynięcia uzgodnionego okresu zatrudnienia.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="contact-strip">
+  <div class="container">
+    <div class="contact-strip-inner">
+      <div class="contact-strip-text">
+        <h2 class="section-title" style="color:#fff">Zacznijmy razem</h2>
+        <p>Zadzwoń lub napisz – bezpłatnie sprawdzimy ile możesz zyskać z KFS.</p>
+      </div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;">
+        <a href="tel:+48726697562" class="btn btn-white">
+          <i class="fa-solid fa-phone"></i> +48 726 697 562
+        </a>
+        <a href="kursy.html" class="btn btn-outline">
+          Przeglądaj kursy
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="kontakt" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <img src="Logo/EDUCANDIS_samo.png" alt="Educandis" style="filter:brightness(0) invert(1)" />
+        </a>
+        <p>Profesjonalne szkolenia zawodowe z możliwością dofinansowania z Krajowego Funduszu Szkoleniowego.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Oferta</div>
+        <ul class="footer-links">
+          <li><a href="kursy.html">Kursy i szkolenia</a></li>
+          <li><a href="finansowanie.html">Finansowanie KFS</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Informacje</div>
+        <ul class="footer-links">
+          <li><a href="index.html#o-nas">O nas</a></li>
+          <li><a href="#">Polityka prywatności</a></li>
+          <li><a href="#">Regulamin</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Kontakt</div>
+        <ul class="footer-contact-list">
+          <li class="footer-contact-item">
+            <i class="fa-solid fa-location-dot footer-contact-icon"></i>
+            <span>Pl. Solny 14/3<br />50-062 Wrocław</span>
+          </li>
+          <li class="footer-contact-item">
+            <i class="fa-solid fa-phone footer-contact-icon"></i>
+            <a href="tel:+48726697562">+48 726 697 562</a>
+          </li>
+          <li class="footer-contact-item">
+            <i class="fa-solid fa-envelope footer-contact-icon"></i>
+            <a href="mailto:kontakt@educandis.pl">kontakt@educandis.pl</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Educandis. Wszelkie prawa zastrzeżone.</p>
+      <p>Wpisani do <a href="https://stor.praca.gov.pl/portal/" target="_blank" rel="noopener">Rejestru Instytucji Szkoleniowych</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/puzzle.js"></script>
+</body>
+</html>

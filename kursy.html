@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kursy i Szkolenia – Educandis</title>
+  <meta name="description" content="Przeglądaj ofertę kursów zawodowych Educandis. Szkolenia z certyfikatem, możliwość dofinansowania z KFS. Kursy IT, zarządzanie, finanse i wiele więcej." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+
+  <style>
+    /* ---- Page hero ---- */
+    .page-hero {
+      background: var(--color-dark);
+      padding-block: 130px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(227,66,52,.12) 0%, transparent 65%);
+      top: -200px; right: -100px;
+      pointer-events: none;
+    }
+    .page-hero-inner {
+      position: relative;
+      z-index: 1;
+    }
+    .page-hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--color-white);
+      margin-top: 12px;
+      margin-bottom: 14px;
+    }
+    .page-hero-desc {
+      font-size: 1rem;
+      color: rgba(255,255,255,.6);
+      max-width: 500px;
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .8rem;
+      color: rgba(255,255,255,.38);
+      margin-bottom: 16px;
+    }
+    .breadcrumb a { color: rgba(255,255,255,.55); transition: color .2s; }
+    .breadcrumb a:hover { color: var(--color-primary); }
+    .breadcrumb i { font-size: .65rem; }
+
+    /* ---- Filter bar ---- */
+    .courses-section {
+      padding-block: 64px;
+      background: var(--color-light-bg);
+    }
+    .filter-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 36px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: .82rem;
+      font-weight: 600;
+      font-family: var(--font-heading);
+      color: var(--color-text-muted);
+      background: var(--color-white);
+      border: 1.5px solid var(--color-gray-light);
+      cursor: pointer;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--color-primary);
+      color: var(--color-white);
+      border-color: var(--color-primary);
+    }
+
+    .courses-meta {
+      font-size: .85rem;
+      color: var(--color-text-muted);
+    }
+
+    /* ---- Courses grid ---- */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .course-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1.5px solid var(--color-gray-light);
+      transition: transform .3s, box-shadow .3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+    .course-card-img {
+      height: 180px;
+      overflow: hidden;
+      position: relative;
+    }
+    .course-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .45s ease;
+    }
+    .course-card:hover .course-card-img img { transform: scale(1.05); }
+
+    .course-card-badge {
+      position: absolute;
+      top: 12px; left: 12px;
+      padding: 4px 10px;
+      border-radius: 50px;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .badge-kfs {
+      background: var(--color-primary);
+      color: var(--color-white);
+    }
+    .badge-online { background: #1a1a2e; color: #fff; }
+    .badge-stac   { background: #f0f7ff; color: #2563eb; }
+
+    .course-card-body { padding: 20px 22px; flex: 1; display: flex; flex-direction: column; }
+
+    .course-card-cat {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      margin-bottom: 8px;
+    }
+    .course-card-title {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-dark);
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+    .course-card-desc {
+      font-size: .83rem;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .course-card-meta {
+      display: flex;
+      gap: 16px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--color-gray-light);
+      font-size: .78rem;
+      color: var(--color-text-muted);
+    }
+    .course-card-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .course-card-meta-item i { color: var(--color-primary); }
+
+    .course-card-footer {
+      padding: 14px 22px 18px;
+      border-top: 1px solid var(--color-gray-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .course-price {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--color-dark);
+    }
+    .course-price-note {
+      font-size: .72rem;
+      color: var(--color-text-muted);
+      font-weight: 400;
+    }
+    .btn-sm {
+      padding: 8px 18px;
+      font-size: .82rem;
+      border-radius: 50px;
+    }
+
+    /* ---- KRS info strip ---- */
+    .krs-strip {
+      background: var(--color-dark);
+      padding-block: 56px;
+    }
+    .krs-strip-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+      align-items: center;
+    }
+    .krs-strip h3 {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--color-white);
+      margin-bottom: 10px;
+    }
+    .krs-strip p {
+      font-size: .9rem;
+      color: rgba(255,255,255,.55);
+      max-width: 560px;
+    }
+    @media (max-width: 768px) {
+      .krs-strip-inner { grid-template-columns: 1fr; }
+      .courses-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 1024px) {
+      .courses-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PAGE LOADER -->
+<div id="page-loader">
+  <div class="loader-logo">Edu<span>candis</span></div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- MOBILE NAV -->
+<nav class="mobile-nav">
+  <a href="index.html">Strona główna</a>
+  <a href="kursy.html">Kursy</a>
+  <a href="finansowanie.html">Finansowanie KFS</a>
+  <a href="powiat.html">Sprawdź nabory</a>
+  <a href="kontakt.html">Kontakt</a>
+  <a href="powiat.html" class="btn btn-primary">Sprawdź nabory KFS</a>
+</nav>
+
+<!-- NAVBAR -->
+<header class="navbar" role="banner">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <img src="Logo/EDUCANDIS_samo.png" alt="Logo Educandis" />
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#uslugi">Usługi</a>
+      <a href="kursy.html" style="color: var(--color-primary)">Kursy</a>
+      <a href="finansowanie.html">Finansowanie KFS</a>
+      <a href="powiat.html">Sprawdź nabory</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+    <a href="powiat.html" class="btn btn-primary nav-cta">
+      Sprawdź nabory KFS <i class="fa-solid fa-arrow-right"></i>
+    </a>
+    <button class="hamburger" aria-label="Otwórz menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Strona główna</a>
+      <i class="fa-solid fa-chevron-right"></i>
+      <span>Kursy</span>
+    </div>
+    <span class="section-label">Oferta szkoleń</span>
+    <h1 class="page-hero-title">Kursy i Szkolenia</h1>
+    <p class="page-hero-desc">
+      Ponad 200 kursów zawodowych z certyfikatem. Większość objęta
+      dofinansowaniem z Krajowego Funduszu Szkoleniowego.
+    </p>
+  </div>
+</section>
+
+<!-- COURSES SECTION -->
+<section class="courses-section">
+  <div class="container">
+
+    <!-- Filter row -->
+    <div class="filter-row">
+      <div class="filter-bar">
+        <button class="filter-btn active" data-cat="all">Wszystkie</button>
+        <button class="filter-btn" data-cat="it">IT i technologia</button>
+        <button class="filter-btn" data-cat="zarzadzanie">Zarządzanie</button>
+        <button class="filter-btn" data-cat="finanse">Finanse</button>
+        <button class="filter-btn" data-cat="jezyki">Języki obce</button>
+        <button class="filter-btn" data-cat="hr">HR i prawo</button>
+      </div>
+      <span class="courses-meta">Wyświetlono <strong>12</strong> kursów</span>
+    </div>
+
+    <!-- Grid -->
+    <div class="courses-grid">
+
+      <!-- IT 1 -->
+      <div class="course-card reveal" data-cat="it">
+        <div class="course-card-img">
+          <img src="Zdjecia/AdobeStock_247538873.jpeg" alt="Kurs Excel" loading="lazy" />
+          <span class="course-card-badge badge-kfs">KFS</span>
+        </div>
+        <div class="course-card-body">
+          <div class="course-card-cat">IT i technologia</div>
+          <h3 class="course-card-title">Microsoft Excel – od podstaw do zaawansowanych</h3>
+          <p class="course-card-desc">
+            Nauczysz się efektywnie pracy z arkuszami, tworzyć formuły, tabele
+            przestawne i automatyzować procesy.
+          </p>
+          <div class="course-card-meta">
+            <span class="course-card-meta-item"><i class="fa-regular fa-clock"></i> 32 h</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-laptop"></i> Online / Stacj.</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-certificate"></i> Certyfikat</span>
+          </div>
+        </div>
+        <div class="course-card-footer">
+          <div>
+            <div class="course-price">1 490 zł <span class="course-price-note">/ os.</span></div>
+            <div style="font-size:.7rem;color:var(--color-primary);margin-top:2px">Możliwe dofinansowanie KFS</div>
+          </div>
+          <a href="kontakt.html" class="btn btn-dark btn-sm">Zapytaj o kurs</a>
+        </div>
+      </div>
+
+      <!-- IT 2 -->
+      <div class="course-card reveal delay-1" data-cat="it">
+        <div class="course-card-img">
+          <img src="Zdjecia/AdobeStock_282835056.jpeg" alt="Power BI" loading="lazy" />
+          <span class="course-card-badge badge-kfs">KFS</span>
+        </div>
+        <div class="course-card-body">
+          <div class="course-card-cat">IT i technologia</div>
+          <h3 class="course-card-title">Power BI – wizualizacja i analiza danych</h3>
+          <p class="course-card-desc">
+            Twórz interaktywne raporty i dashboardy. Łączenie danych, DAX,
+            publikacja raportów w chmurze.
+          </p>
+          <div class="course-card-meta">
+            <span class="course-card-meta-item"><i class="fa-regular fa-clock"></i> 24 h</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-laptop"></i> Online</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-certificate"></i> Certyfikat</span>
+          </div>
+        </div>
+        <div class="course-card-footer">
+          <div>
+            <div class="course-price">1 890 zł <span class="course-price-note">/ os.</span></div>
+            <div style="font-size:.7rem;color:var(--color-primary);margin-top:2px">Możliwe dofinansowanie KFS</div>
+          </div>
+          <a href="kontakt.html" class="btn btn-dark btn-sm">Zapytaj o kurs</a>
+        </div>
+      </div>
+
+      <!-- Zarządzanie 1 -->
+      <div class="course-card reveal delay-2" data-cat="zarzadzanie">
+        <div class="course-card-img">
+          <img src="Zdjecia/AdobeStock_31208934.jpeg" alt="Zarządzanie projektem" loading="lazy" />
+          <span class="course-card-badge badge-kfs">KFS</span>
+        </div>
+        <div class="course-card-body">
+          <div class="course-card-cat">Zarządzanie</div>
+          <h3 class="course-card-title">Zarządzanie projektami – metodyki Agile i Scrum</h3>
+          <p class="course-card-desc">
+            Praktyczne szkolenie z prowadzenia projektów w podejściu zwinnym.
+            Przygotowanie do certyfikacji PMI i Scrum Master.
+          </p>
+          <div class="course-card-meta">
+            <span class="course-card-meta-item"><i class="fa-regular fa-clock"></i> 40 h</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-building"></i> Stacjonarne</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-certificate"></i> Certyfikat</span>
+          </div>
+        </div>
+        <div class="course-card-footer">
+          <div>
+            <div class="course-price">2 490 zł <span class="course-price-note">/ os.</span></div>
+            <div style="font-size:.7rem;color:var(--color-primary);margin-top:2px">Możliwe dofinansowanie KFS</div>
+          </div>
+          <a href="kontakt.html" class="btn btn-dark btn-sm">Zapytaj o kurs</a>
+        </div>
+      </div>
+
+      <!-- Finanse 1 -->
+      <div class="course-card reveal" data-cat="finanse">
+        <div class="course-card-img">
+          <img src="Zdjecia/Fotolia_68283562_XS.jpg" alt="Rachunkowość" loading="lazy" />
+          <span class="course-card-badge badge-kfs">KFS</span>
+        </div>
+        <div class="course-card-body">
+          <div class="course-card-cat">Finanse</div>
+          <h3 class="course-card-title">Rachunkowość dla nierachunkowców</h3>
+          <p class="course-card-desc">
+            Podstawy rachunkowości, czytanie sprawozdań finansowych, analiza
+            wskaźnikowa – kurs dla managerów i właścicieli firm.
+          </p>
+          <div class="course-card-meta">
+            <span class="course-card-meta-item"><i class="fa-regular fa-clock"></i> 16 h</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-laptop"></i> Online</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-certificate"></i> Certyfikat</span>
+          </div>
+        </div>
+        <div class="course-card-footer">
+          <div>
+            <div class="course-price">990 zł <span class="course-price-note">/ os.</span></div>
+            <div style="font-size:.7rem;color:var(--color-primary);margin-top:2px">Możliwe dofinansowanie KFS</div>
+          </div>
+          <a href="kontakt.html" class="btn btn-dark btn-sm">Zapytaj o kurs</a>
+        </div>
+      </div>
+
+      <!-- HR 1 -->
+      <div class="course-card reveal delay-1" data-cat="hr">
+        <div class="course-card-img">
+          <img src="Zdjecia/about-300x200.jpg" alt="HR Kadry" loading="lazy" />
+          <span class="course-card-badge badge-kfs">KFS</span>
+        </div>
+        <div class="course-card-body">
+          <div class="course-card-cat">HR i prawo</div>
+          <h3 class="course-card-title">Kadry i płace – kompleksowy kurs</h3>
+          <p class="course-card-desc">
+            Obsługa kadrowo-płacowa, umowy o pracę, rozliczenia ZUS i US,
+            urlopy, wynagrodzenia i akta pracownicze.
+          </p>
+          <div class="course-card-meta">
+            <span class="course-card-meta-item"><i class="fa-regular fa-clock"></i> 80 h</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-building"></i> Stacjonarne</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-certificate"></i> Certyfikat</span>
+          </div>
+        </div>
+        <div class="course-card-footer">
+          <div>
+            <div class="course-price">2 990 zł <span class="course-price-note">/ os.</span></div>
+            <div style="font-size:.7rem;color:var(--color-primary);margin-top:2px">Możliwe dofinansowanie KFS</div>
+          </div>
+          <a href="kontakt.html" class="btn btn-dark btn-sm">Zapytaj o kurs</a>
+        </div>
+      </div>
+
+      <!-- Języki 1 -->
+      <div class="course-card reveal delay-2" data-cat="jezyki">
+        <div class="course-card-img">
+          <img src="Zdjecia/AdobeStock_282835056.jpeg" alt="Angielski biznesowy" loading="lazy" />
+          <span class="course-card-badge badge-kfs">KFS</span>
+        </div>
+        <div class="course-card-body">
+          <div class="course-card-cat">Języki obce</div>
+          <h3 class="course-card-title">Angielski biznesowy – poziom B1/B2</h3>
+          <p class="course-card-desc">
+            Kurs ukierunkowany na komunikację zawodową: negocjacje, prezentacje,
+            korespondencja biznesowa i spotkania online.
+          </p>
+          <div class="course-card-meta">
+            <span class="course-card-meta-item"><i class="fa-regular fa-clock"></i> 120 h</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-laptop"></i> Online / Stacj.</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-certificate"></i> Certyfikat</span>
+          </div>
+        </div>
+        <div class="course-card-footer">
+          <div>
+            <div class="course-price">3 200 zł <span class="course-price-note">/ os.</span></div>
+            <div style="font-size:.7rem;color:var(--color-primary);margin-top:2px">Możliwe dofinansowanie KFS</div>
+          </div>
+          <a href="kontakt.html" class="btn btn-dark btn-sm">Zapytaj o kurs</a>
+        </div>
+      </div>
+
+      <!-- IT 3 -->
+      <div class="course-card reveal" data-cat="it">
+        <div class="course-card-img">
+          <img src="Zdjecia/AdobeStock_247538873.jpeg" alt="Python" loading="lazy" />
+          <span class="course-card-badge badge-kfs">KFS</span>
+        </div>
+        <div class="course-card-body">
+          <div class="course-card-cat">IT i technologia</div>
+          <h3 class="course-card-title">Python dla analityków danych</h3>
+          <p class="course-card-desc">
+            Nauka programowania w Pythonie od podstaw – pandas, matplotlib,
+            analiza i wizualizacja danych biznesowych.
+          </p>
+          <div class="course-card-meta">
+            <span class="course-card-meta-item"><i class="fa-regular fa-clock"></i> 60 h</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-laptop"></i> Online</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-certificate"></i> Certyfikat</span>
+          </div>
+        </div>
+        <div class="course-card-footer">
+          <div>
+            <div class="course-price">2 700 zł <span class="course-price-note">/ os.</span></div>
+            <div style="font-size:.7rem;color:var(--color-primary);margin-top:2px">Możliwe dofinansowanie KFS</div>
+          </div>
+          <a href="kontakt.html" class="btn btn-dark btn-sm">Zapytaj o kurs</a>
+        </div>
+      </div>
+
+      <!-- Zarządzanie 2 -->
+      <div class="course-card reveal delay-1" data-cat="zarzadzanie">
+        <div class="course-card-img">
+          <img src="Zdjecia/AdobeStock_31208934.jpeg" alt="Przywództwo" loading="lazy" />
+          <span class="course-card-badge badge-kfs">KFS</span>
+        </div>
+        <div class="course-card-body">
+          <div class="course-card-cat">Zarządzanie</div>
+          <h3 class="course-card-title">Przywództwo i zarządzanie zespołem</h3>
+          <p class="course-card-desc">
+            Rozwijaj kompetencje lidera – motywowanie, feedback, zarządzanie
+            konfliktem i budowanie zaangażowania w zespole.
+          </p>
+          <div class="course-card-meta">
+            <span class="course-card-meta-item"><i class="fa-regular fa-clock"></i> 24 h</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-building"></i> Stacjonarne</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-certificate"></i> Certyfikat</span>
+          </div>
+        </div>
+        <div class="course-card-footer">
+          <div>
+            <div class="course-price">1 690 zł <span class="course-price-note">/ os.</span></div>
+            <div style="font-size:.7rem;color:var(--color-primary);margin-top:2px">Możliwe dofinansowanie KFS</div>
+          </div>
+          <a href="kontakt.html" class="btn btn-dark btn-sm">Zapytaj o kurs</a>
+        </div>
+      </div>
+
+      <!-- Finanse 2 -->
+      <div class="course-card reveal delay-2" data-cat="finanse">
+        <div class="course-card-img">
+          <img src="Zdjecia/Fotolia_68283562_XS.jpg" alt="VAT" loading="lazy" />
+          <span class="course-card-badge badge-kfs">KFS</span>
+        </div>
+        <div class="course-card-body">
+          <div class="course-card-cat">Finanse</div>
+          <h3 class="course-card-title">VAT w praktyce – zmiany przepisów 2025</h3>
+          <p class="course-card-desc">
+            Aktualne przepisy VAT, nowe obowiązki dokumentacyjne, JPK_VAT,
+            e-faktury i interpretacje organów podatkowych.
+          </p>
+          <div class="course-card-meta">
+            <span class="course-card-meta-item"><i class="fa-regular fa-clock"></i> 8 h</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-laptop"></i> Online</span>
+            <span class="course-card-meta-item"><i class="fa-solid fa-certificate"></i> Certyfikat</span>
+          </div>
+        </div>
+        <div class="course-card-footer">
+          <div>
+            <div class="course-price">590 zł <span class="course-price-note">/ os.</span></div>
+            <div style="font-size:.7rem;color:var(--color-primary);margin-top:2px">Możliwe dofinansowanie KFS</div>
+          </div>
+          <a href="kontakt.html" class="btn btn-dark btn-sm">Zapytaj o kurs</a>
+        </div>
+      </div>
+
+    </div><!-- /courses-grid -->
+
+  </div>
+</section>
+
+<!-- KRS INFO -->
+<section class="krs-strip" id="krs">
+  <div class="container">
+    <div class="krs-strip-inner reveal">
+      <div>
+        <h3>Wpisani do Krajowego Rejestru Szkoleń</h3>
+        <p>
+          Educandis jest wpisana do Krajowego Rejestru Szkoleń (KRS) oraz
+          Rejestru Instytucji Szkoleniowych (RIS) prowadzonego przez Ministerstwo Rodziny,
+          Pracy i Polityki Społecznej. Wszystkie nasze certyfikaty są uznawane przez
+          pracodawców w Polsce i Unii Europejskiej.
+        </p>
+      </div>
+      <a href="finansowanie.html" class="btn btn-primary" style="white-space:nowrap;flex-shrink:0">
+        Sprawdź dofinansowanie <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="kontakt" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <img src="Logo/EDUCANDIS_samo.png" alt="Educandis" style="filter:brightness(0) invert(1)" />
+        </a>
+        <p>Profesjonalne szkolenia zawodowe z możliwością dofinansowania z Krajowego Funduszu Szkoleniowego.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Oferta</div>
+        <ul class="footer-links">
+          <li><a href="kursy.html">Kursy i szkolenia</a></li>
+          <li><a href="finansowanie.html">Finansowanie KFS</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Informacje</div>
+        <ul class="footer-links">
+          <li><a href="index.html#o-nas">O nas</a></li>
+          <li><a href="#">Polityka prywatności</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Kontakt</div>
+        <ul class="footer-contact-list">
+          <li class="footer-contact-item">
+            <i class="fa-solid fa-phone footer-contact-icon"></i>
+            <a href="tel:+48726697562">+48 726 697 562</a>
+          </li>
+          <li class="footer-contact-item">
+            <i class="fa-solid fa-envelope footer-contact-icon"></i>
+            <a href="mailto:kontakt@educandis.pl">kontakt@educandis.pl</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Educandis. Wszelkie prawa zastrzeżone.</p>
+      <p>Wpisani do <a href="https://stor.praca.gov.pl/portal/" target="_blank" rel="noopener">Rejestru Instytucji Szkoleniowych</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/puzzle.js"></script>
+</body>
+</html>

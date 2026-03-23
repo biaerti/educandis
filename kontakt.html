@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kontakt – Educandis</title>
+  <meta name="description" content="Skontaktuj się z Educandis. Pomożemy Ci znaleźć nabór KFS, przygotujemy dokumentację i złożymy wniosek razem z Tobą." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+
+  <style>
+    .page-hero {
+      background: var(--color-dark);
+      padding-block: 130px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(227,66,52,.12) 0%, transparent 65%);
+      top: -200px; right: -100px;
+      pointer-events: none;
+    }
+    .page-hero-inner { position: relative; z-index: 1; }
+    .page-hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--color-white);
+      margin-top: 12px;
+      margin-bottom: 14px;
+    }
+    .page-hero-desc {
+      font-size: 1rem;
+      color: rgba(255,255,255,.6);
+      max-width: 540px;
+      line-height: 1.65;
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .8rem;
+      color: rgba(255,255,255,.38);
+      margin-bottom: 16px;
+    }
+    .breadcrumb a { color: rgba(255,255,255,.55); transition: color .2s; }
+    .breadcrumb a:hover { color: var(--color-primary); }
+    .breadcrumb i { font-size: .65rem; }
+
+    /* ---- Contact section ---- */
+    .contact-section {
+      padding-block: 72px;
+      background: var(--color-light-bg);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* ---- Form card ---- */
+    .contact-form-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: 40px 36px;
+      box-shadow: var(--shadow-md);
+    }
+    .contact-form-title {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--color-dark);
+      margin-bottom: 6px;
+    }
+    .contact-form-sub {
+      font-size: .88rem;
+      color: var(--color-text-muted);
+      margin-bottom: 28px;
+      line-height: 1.55;
+    }
+    .cf-field {
+      margin-bottom: 16px;
+    }
+    .cf-label {
+      display: block;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--color-dark);
+      margin-bottom: 6px;
+    }
+    .cf-input, .cf-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--color-gray-light);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: .92rem;
+      color: var(--color-text);
+      background: var(--color-white);
+      outline: none;
+      transition: border-color .2s;
+      box-sizing: border-box;
+    }
+    .cf-input:focus, .cf-textarea:focus { border-color: var(--color-primary); }
+    .cf-textarea { resize: vertical; min-height: 100px; }
+    .cf-consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .78rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+    .cf-consent input[type="checkbox"] { margin-top: 2px; flex-shrink: 0; }
+    .cf-consent a { color: var(--color-primary); }
+    .cf-submit { width: 100%; padding: 15px; font-size: 1rem; justify-content: center; }
+    .cf-submit:disabled { opacity: .5; cursor: not-allowed; transform: none !important; }
+    .cf-note {
+      margin-top: 10px;
+      font-size: .78rem;
+      color: var(--color-text-muted);
+      text-align: center;
+    }
+    .cf-success {
+      text-align: center;
+      padding: 32px 0;
+    }
+    .cf-success-icon {
+      font-size: 2.5rem;
+      color: #16a34a;
+      margin-bottom: 16px;
+    }
+    .cf-success h3 {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      color: var(--color-dark);
+      margin-bottom: 8px;
+    }
+    .cf-success p { font-size: .9rem; color: var(--color-text-muted); line-height: 1.55; }
+    .cf-error-msg { font-size: .8rem; color: #dc2626; margin-top: 6px; display: none; }
+
+    /* ---- Right column ---- */
+    .contact-info-col {}
+    .contact-photo {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      object-fit: cover;
+      height: 260px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-md);
+    }
+    .contact-services {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+    .contact-services-title {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-dark);
+      margin-bottom: 16px;
+    }
+    .cs-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .cs-item:last-child { margin-bottom: 0; }
+    .cs-icon {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(227,66,52,.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--color-primary);
+      font-size: .8rem;
+    }
+    .cs-text { font-size: .88rem; color: var(--color-text); line-height: 1.5; }
+    .cs-text strong { color: var(--color-dark); display: block; font-size: .88rem; margin-bottom: 2px; }
+
+    .contact-direct {
+      margin-top: 20px;
+      background: var(--color-dark);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .contact-direct-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255,255,255,.8);
+      font-size: .88rem;
+    }
+    .contact-direct-item i { color: var(--color-primary); width: 16px; }
+    .contact-direct-item a { color: var(--color-white); font-weight: 600; }
+
+    @media (max-width: 900px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+      .contact-photo { height: 200px; }
+      .contact-form-card { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PAGE LOADER -->
+<div id="page-loader">
+  <div class="loader-logo">Edu<span>candis</span></div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- MOBILE NAV -->
+<nav class="mobile-nav">
+  <a href="index.html">Strona główna</a>
+  <a href="kursy.html">Kursy</a>
+  <a href="finansowanie.html">Finansowanie KFS</a>
+  <a href="powiat.html">Sprawdź nabory</a>
+  <a href="kontakt.html">Kontakt</a>
+  <a href="powiat.html" class="btn btn-primary">Sprawdź nabory KFS</a>
+</nav>
+
+<!-- NAVBAR -->
+<header class="navbar" role="banner">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <img src="Logo/EDUCANDIS_samo.png" alt="Logo Educandis" />
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#uslugi">Usługi</a>
+      <a href="kursy.html">Kursy</a>
+      <a href="finansowanie.html">Finansowanie KFS</a>
+      <a href="powiat.html">Sprawdź nabory</a>
+      <a href="kontakt.html" style="color: var(--color-primary)">Kontakt</a>
+    </nav>
+    <a href="powiat.html" class="btn btn-primary nav-cta">
+      Sprawdź nabory KFS <i class="fa-solid fa-arrow-right"></i>
+    </a>
+    <button class="hamburger" aria-label="Otwórz menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Strona główna</a>
+      <i class="fa-solid fa-chevron-right"></i>
+      <span>Kontakt</span>
+    </div>
+    <span class="section-label">Jesteśmy tu dla Ciebie</span>
+    <h1 class="page-hero-title">Skontaktuj się z nami –<br />zajmiemy się resztą</h1>
+    <p class="page-hero-desc">
+      Pomożemy Ci znaleźć aktywny nabór KFS w Twoim powiecie, przygotujemy kompletną dokumentację
+      i złożymy wniosek razem z Tobą. Bezpłatnie.
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT MAIN -->
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- FORM -->
+      <div class="contact-form-card reveal">
+        <div class="contact-form-title">Zostaw kontakt – oddzwonimy</div>
+        <p class="contact-form-sub">
+          Wypełnij formularz, a oddzwonimy do Ciebie w ciągu kilku godzin w godzinach pracy.
+          Bezpłatna konsultacja, bez zobowiązań.
+        </p>
+
+        <div id="cf-form">
+          <div class="cf-field">
+            <label class="cf-label" for="cf-name">Imię i nazwisko *</label>
+            <input type="text" id="cf-name" class="cf-input" placeholder="Jan Kowalski" autocomplete="name" />
+          </div>
+          <div class="cf-field">
+            <label class="cf-label" for="cf-placowka">Nazwa placówki / firmy *</label>
+            <input type="text" id="cf-placowka" class="cf-input" placeholder="np. Centrum Medyczne XYZ Sp. z o.o." autocomplete="organization" />
+          </div>
+          <div class="cf-field">
+            <label class="cf-label" for="cf-phone">Numer telefonu *</label>
+            <input type="tel" id="cf-phone" class="cf-input" placeholder="+48 600 000 000" autocomplete="tel" />
+          </div>
+          <div class="cf-field">
+            <label class="cf-label" for="cf-msg">Wiadomość <span style="font-weight:400;color:var(--color-text-muted)">(opcjonalnie)</span></label>
+            <textarea id="cf-msg" class="cf-textarea" placeholder="Np. szkolenia dla pielęgniarek, interesuje nas nabór w powiecie..."></textarea>
+          </div>
+          <label class="cf-consent" id="cf-consent-wrap">
+            <input type="checkbox" id="cf-consent" />
+            <span>Wyrażam zgodę na przetwarzanie moich danych osobowych przez Educandis w celu udzielenia odpowiedzi na zapytanie oraz kontaktu telefonicznego. Administratorem danych jest Educandis. Więcej w <a href="polityka-prywatnosci.html" target="_blank">Polityce prywatności</a>.</span>
+          </label>
+          <div class="cf-error-msg" id="cf-error"></div>
+          <button class="btn btn-primary cf-submit" id="cf-submit">
+            <i class="fa-solid fa-phone"></i> Oddzwoń do mnie
+          </button>
+          <p class="cf-note">Bezpłatna konsultacja · Bez zobowiązań · Odpowiadamy w ciągu kilku godzin</p>
+        </div>
+
+        <div class="cf-success" id="cf-success" style="display:none">
+          <div class="cf-success-icon"><i class="fa-solid fa-circle-check"></i></div>
+          <h3>Dziękujemy! Oddzwonimy wkrótce.</h3>
+          <p>Zazwyczaj kontaktujemy się w ciągu kilku godzin w godzinach pracy (Pon–Pt 8:00–17:00).</p>
+        </div>
+      </div>
+
+      <!-- RIGHT COL -->
+      <div class="contact-info-col reveal delay-1">
+        <img
+          src="Zdjecia/AdobeStock_282835056.jpeg"
+          alt="Szkolenia zawodowe KFS"
+          class="contact-photo"
+        />
+
+        <div class="contact-services">
+          <div class="contact-services-title">Co robimy dla Ciebie</div>
+          <div class="cs-item">
+            <div class="cs-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+            <div class="cs-text">
+              <strong>Monitorujemy nabory KFS</strong>
+              Śledzimy terminy we wszystkich powiatowych urzędach pracy w Polsce na bieżąco.
+            </div>
+          </div>
+          <div class="cs-item">
+            <div class="cs-icon"><i class="fa-solid fa-file-pen"></i></div>
+            <div class="cs-text">
+              <strong>Przygotowujemy dokumentację</strong>
+              Kompletujemy wszystkie wymagane dokumenty i wypełniamy wniosek – Ty tylko podpisujesz.
+            </div>
+          </div>
+          <div class="cs-item">
+            <div class="cs-icon"><i class="fa-solid fa-bolt"></i></div>
+            <div class="cs-text">
+              <strong>Działamy szybko</strong>
+              Nabory trwają często tylko 2–3 dni. Dzwonimy do Ciebie jako pierwsi gdy rusza nabór w Twoim powiecie.
+            </div>
+          </div>
+          <div class="cs-item">
+            <div class="cs-icon"><i class="fa-solid fa-coins"></i></div>
+            <div class="cs-text">
+              <strong>Bezpłatna pomoc</strong>
+              Nasza usługa wsparcia KFS jest w pełni bezpłatna. Zarabiamy na szkoleniach, nie na doradztwie.
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-direct">
+          <div class="contact-direct-item">
+            <i class="fa-solid fa-phone"></i>
+            <span>Zadzwoń bezpośrednio: <a href="tel:+48726697562">+48 726 697 562</a></span>
+          </div>
+          <div class="contact-direct-item">
+            <i class="fa-solid fa-envelope"></i>
+            <span><a href="mailto:kontakt@educandis.pl">kontakt@educandis.pl</a></span>
+          </div>
+          <div class="contact-direct-item">
+            <i class="fa-regular fa-clock"></i>
+            <span>Pon–Pt: 8:00–17:00</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <img src="Logo/EDUCANDIS_samo.png" alt="Educandis" style="filter:brightness(0) invert(1)" />
+        </a>
+        <p>Profesjonalne szkolenia zawodowe z możliwością dofinansowania z Krajowego Funduszu Szkoleniowego.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Oferta</div>
+        <ul class="footer-links">
+          <li><a href="kursy.html">Kursy i szkolenia</a></li>
+          <li><a href="finansowanie.html">Finansowanie KFS</a></li>
+          <li><a href="powiat.html">Sprawdź nabory</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Informacje</div>
+        <ul class="footer-links">
+          <li><a href="#">O nas</a></li>
+          <li><a href="polityka-prywatnosci.html">Polityka prywatności</a></li>
+          <li><a href="#">Regulamin</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Kontakt</div>
+        <ul class="footer-contact-list">
+          <li class="footer-contact-item">
+            <i class="fa-solid fa-location-dot footer-contact-icon"></i>
+            <span>Pl. Solny 14/3<br />50-062 Wrocław</span>
+          </li>
+          <li class="footer-contact-item">
+            <i class="fa-solid fa-phone footer-contact-icon"></i>
+            <a href="tel:+48726697562">+48 726 697 562</a>
+          </li>
+          <li class="footer-contact-item">
+            <i class="fa-solid fa-envelope footer-contact-icon"></i>
+            <a href="mailto:kontakt@educandis.pl">kontakt@educandis.pl</a>
+          </li>
+          <li class="footer-contact-item">
+            <i class="fa-regular fa-clock footer-contact-icon"></i>
+            <span>Pon–Pt: 8:00–17:00</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Educandis. Wszelkie prawa zastrzeżone.</p>
+      <p>Wpisani do <a href="https://stor.praca.gov.pl/portal/" target="_blank" rel="noopener">Rejestru Instytucji Szkoleniowych</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/puzzle.js"></script>
+<script>
+// === PODMIEŃ NA WEBHOOK DO PRZYJMOWANIA KONTAKTÓW Z n8n ===
+const CONTACT_FORM_WEBHOOK = '';
+
+const submitBtn = document.getElementById('cf-submit');
+const formEl    = document.getElementById('cf-form');
+const successEl = document.getElementById('cf-success');
+const errorEl   = document.getElementById('cf-error');
+
+submitBtn.addEventListener('click', async () => {
+  const name     = document.getElementById('cf-name').value.trim();
+  const placowka = document.getElementById('cf-placowka').value.trim();
+  const phone    = document.getElementById('cf-phone').value.trim();
+  const msg      = document.getElementById('cf-msg').value.trim();
+  const consent  = document.getElementById('cf-consent').checked;
+
+  errorEl.style.display = 'none';
+
+  if (!name || !placowka || !phone) {
+    errorEl.textContent = 'Uzupełnij wszystkie wymagane pola (imię, placówka, telefon).';
+    errorEl.style.display = 'block';
+    return;
+  }
+  if (!consent) {
+    errorEl.textContent = 'Zaznacz zgodę na przetwarzanie danych osobowych.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<div class="spinner" style="width:18px;height:18px;border-width:2px;margin:0 auto;border-top-color:#fff"></div>';
+
+  try {
+    if (CONTACT_FORM_WEBHOOK) {
+      await fetch(CONTACT_FORM_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imie: name, placowka, telefon: phone, wiadomosc: msg })
+      });
+    }
+  } catch {}
+
+  formEl.style.display = 'none';
+  successEl.style.display = 'block';
+});
+</script>
+</body>
+</html>

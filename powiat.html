@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sprawdź nabory KFS w Twoim powiecie – Educandis</title>
+  <meta name="description" content="Sprawdź kiedy Twój Powiatowy Urząd Pracy prowadzi nabory wniosków KFS na szkolenia. Wybierz powiat i dowiedz się o aktualnych terminach." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+
+  <style>
+    /* ---- Page hero ---- */
+    .page-hero {
+      background: var(--color-dark);
+      padding-block: 130px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(227,66,52,.12) 0%, transparent 65%);
+      top: -200px; right: -100px;
+      pointer-events: none;
+    }
+    .page-hero-inner { position: relative; z-index: 1; }
+    .page-hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--color-white);
+      margin-top: 12px;
+      margin-bottom: 14px;
+    }
+    .page-hero-desc {
+      font-size: 1rem;
+      color: rgba(255,255,255,.6);
+      max-width: 540px;
+      line-height: 1.65;
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .8rem;
+      color: rgba(255,255,255,.38);
+      margin-bottom: 16px;
+    }
+    .breadcrumb a { color: rgba(255,255,255,.55); transition: color .2s; }
+    .breadcrumb a:hover { color: var(--color-primary); }
+    .breadcrumb i { font-size: .65rem; }
+
+    /* ---- Main checker section ---- */
+    .checker-section {
+      padding-block: 72px;
+      background: var(--color-light-bg);
+    }
+
+    .checker-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: 48px 44px;
+      box-shadow: var(--shadow-md);
+      max-width: 680px;
+      margin-inline: auto;
+    }
+
+    .checker-title {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--color-dark);
+      margin-bottom: 8px;
+    }
+    .checker-sub {
+      font-size: .9rem;
+      color: var(--color-text-muted);
+      margin-bottom: 28px;
+      line-height: 1.55;
+    }
+
+    /* Searchable select wrapper */
+    .select-wrapper {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .select-search-input {
+      width: 100%;
+      padding: 14px 48px 14px 16px;
+      border: 1.5px solid var(--color-gray-light);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: .95rem;
+      color: var(--color-text);
+      background: var(--color-white);
+      outline: none;
+      transition: border-color .2s;
+    }
+    .select-search-input:focus {
+      border-color: var(--color-primary);
+    }
+    .select-search-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-gray);
+      pointer-events: none;
+    }
+    .select-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0; right: 0;
+      background: var(--color-white);
+      border: 1.5px solid var(--color-gray-light);
+      border-radius: var(--radius-md);
+      max-height: 280px;
+      overflow-y: auto;
+      z-index: 50;
+      box-shadow: var(--shadow-md);
+    }
+    .select-dropdown.open { display: block; }
+    .select-option {
+      padding: 11px 16px;
+      font-size: .9rem;
+      cursor: pointer;
+      transition: background .15s;
+      border-bottom: 1px solid var(--color-gray-light);
+    }
+    .select-option:last-child { border-bottom: none; }
+    .select-option:hover,
+    .select-option.highlighted { background: rgba(227,66,52,.07); }
+    .select-option.selected {
+      background: rgba(227,66,52,.1);
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+    .select-option-empty {
+      padding: 16px;
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: .85rem;
+    }
+
+    /* Selected pill */
+    .selected-powiat-pill {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: rgba(227,66,52,.1);
+      border: 1.5px solid rgba(227,66,52,.25);
+      border-radius: 50px;
+      margin-bottom: 20px;
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+    .selected-powiat-pill.visible { display: inline-flex; }
+    .pill-clear {
+      cursor: pointer;
+      color: var(--color-primary);
+      font-size: .8rem;
+      margin-left: 4px;
+      opacity: .7;
+      transition: opacity .2s;
+    }
+    .pill-clear:hover { opacity: 1; }
+
+    .checker-btn {
+      width: 100%;
+      padding: 15px;
+      font-size: 1rem;
+      border-radius: var(--radius-md);
+      justify-content: center;
+    }
+    .checker-btn:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* ---- Rate limit warning ---- */
+    .rate-limit-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      font-size: .8rem;
+      color: var(--color-text-muted);
+    }
+    .rate-dots {
+      display: flex;
+      gap: 5px;
+    }
+    .rate-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--color-gray-light);
+      transition: background .3s;
+    }
+    .rate-dot.used { background: var(--color-primary); }
+    .rate-limit-text { margin-left: auto; }
+
+    /* ---- Result box ---- */
+    #result-box {
+      margin-top: 28px;
+      display: none;
+    }
+    #result-box.visible { display: block; }
+
+    .result-loading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 20px;
+      background: var(--color-light-bg);
+      border-radius: var(--radius-md);
+      font-size: .9rem;
+      color: var(--color-text-muted);
+    }
+    .spinner {
+      width: 22px; height: 22px;
+      border: 3px solid var(--color-gray-light);
+      border-top-color: var(--color-primary);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .result-success {
+      border: 1.5px solid rgba(34,197,94,.3);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .result-success-header {
+      background: rgba(34,197,94,.08);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .result-success-header i { color: #16a34a; font-size: 1.1rem; }
+    .result-success-header strong {
+      font-family: var(--font-heading);
+      font-size: .95rem;
+      color: var(--color-dark);
+    }
+    .result-success-body {
+      padding: 20px;
+    }
+    .result-dates {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .result-date-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      background: var(--color-light-bg);
+      border-radius: var(--radius-sm);
+    }
+    .result-date-icon {
+      color: var(--color-primary);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .result-date-label {
+      font-size: .78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--color-text-muted);
+      margin-bottom: 3px;
+    }
+    .result-date-value {
+      font-family: var(--font-heading);
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--color-dark);
+    }
+    .result-note {
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: rgba(227,66,52,.06);
+      border-radius: var(--radius-sm);
+      font-size: .82rem;
+      color: var(--color-text-muted);
+      line-height: 1.55;
+    }
+    .result-note a { color: var(--color-primary); font-weight: 600; }
+    .result-raw {
+      margin-top: 12px;
+      font-size: .88rem;
+      color: var(--color-text);
+      line-height: 1.65;
+      white-space: pre-wrap;
+    }
+
+    .result-none {
+      border: 1.5px solid var(--color-gray-light);
+      border-radius: var(--radius-md);
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .result-none i { font-size: 2rem; color: var(--color-gray); margin-bottom: 12px; }
+    .result-none p {
+      font-size: .9rem;
+      color: var(--color-text-muted);
+      line-height: 1.55;
+      margin-bottom: 16px;
+    }
+
+    .result-error {
+      border: 1.5px solid rgba(239,68,68,.3);
+      background: rgba(239,68,68,.05);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .result-error i { color: #dc2626; margin-top: 2px; }
+    .result-error p { font-size: .88rem; color: var(--color-text-muted); line-height: 1.55; }
+
+    .result-blocked {
+      border: 1.5px solid rgba(245,158,11,.35);
+      background: rgba(245,158,11,.06);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      text-align: center;
+    }
+    .result-blocked p { font-size: .9rem; color: #92400e; line-height: 1.55; }
+
+    /* ---- Info strip ---- */
+    .info-strip {
+      padding-block: 64px;
+      background: var(--color-white);
+    }
+    .info-strip-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .info-item { text-align: center; padding: 24px; }
+    .info-item-icon {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+      font-size: 1.2rem;
+    }
+    .info-item-icon.green  { background: rgba(22,163,74,.1);  color: #16a34a; }
+    .info-item-icon.orange { background: rgba(217,119,6,.1);  color: #d97706; }
+    .info-item-icon.red    { background: rgba(227,66,52,.1);  color: #e34234; }
+    .info-item-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--color-dark);
+      margin-bottom: 8px;
+    }
+    .info-item-desc {
+      font-size: .84rem;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    /* ---- Inline contact form ---- */
+    .icf-wrap {
+      margin-top: 16px;
+      background: var(--color-light-bg);
+      border: 1.5px solid var(--color-gray-light);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+    .icf-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: .95rem;
+      color: var(--color-dark);
+      margin-bottom: 12px;
+    }
+    .icf-fields {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .icf-input {
+      flex: 1;
+      min-width: 140px;
+      padding: 11px 14px;
+      border: 1.5px solid var(--color-gray-light);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: .9rem;
+      color: var(--color-text);
+      background: var(--color-white);
+      outline: none;
+      transition: border-color .2s;
+    }
+    .icf-input:focus { border-color: var(--color-primary); }
+    .icf-btn { white-space: nowrap; padding: 11px 20px; font-size: .9rem; }
+    .icf-consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: .75rem;
+      color: var(--color-text-muted);
+      line-height: 1.45;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    .icf-consent input[type="checkbox"] { margin-top: 2px; flex-shrink: 0; }
+    .icf-consent a { color: var(--color-primary); }
+    .icf-sub {
+      font-size: .82rem;
+      color: var(--color-text-muted);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+    .icf-note {
+      font-size: .78rem;
+      color: var(--color-text-muted);
+    }
+    .icf-success {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 0;
+      font-weight: 600;
+      color: #16a34a;
+      font-size: .95rem;
+    }
+
+    @media (max-width: 768px) {
+      .checker-card { padding: 28px 20px; }
+      .info-strip-grid { grid-template-columns: 1fr; gap: 8px; }
+      .icf-fields { flex-direction: column; }
+      .icf-btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PAGE LOADER -->
+<div id="page-loader">
+  <div class="loader-logo">Edu<span>candis</span></div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- MOBILE NAV -->
+<nav class="mobile-nav">
+  <a href="index.html">Strona główna</a>
+  <a href="kursy.html">Kursy</a>
+  <a href="finansowanie.html">Finansowanie KFS</a>
+  <a href="powiat.html">Sprawdź nabory</a>
+  <a href="kontakt.html">Kontakt</a>
+  <a href="powiat.html" class="btn btn-primary">Sprawdź nabory KFS</a>
+</nav>
+
+<!-- NAVBAR -->
+<header class="navbar" role="banner">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <img src="Logo/EDUCANDIS_samo.png" alt="Logo Educandis" />
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#uslugi">Usługi</a>
+      <a href="kursy.html">Kursy</a>
+      <a href="finansowanie.html">Finansowanie KFS</a>
+      <a href="powiat.html" style="color: var(--color-primary)">Sprawdź nabory</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+    <a href="kontakt.html" class="btn btn-primary nav-cta">
+      Bezpłatna konsultacja <i class="fa-solid fa-arrow-right"></i>
+    </a>
+    <button class="hamburger" aria-label="Otwórz menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Strona główna</a>
+      <i class="fa-solid fa-chevron-right"></i>
+      <span>Sprawdź nabory KFS</span>
+    </div>
+    <span class="section-label">Krajowy Fundusz Szkoleniowy</span>
+    <h1 class="page-hero-title">Sprawdź nabory KFS<br />w Twoim powiecie</h1>
+    <p class="page-hero-desc">
+      Każdy Powiatowy Urząd Pracy ogłasza nabory wniosków KFS w innych terminach.
+      Wyszukaj swój powiat i sprawdź, kiedy możesz złożyć wniosek o dofinansowanie szkolenia.
+    </p>
+  </div>
+</section>
+
+<!-- CHECKER -->
+<section class="checker-section">
+  <div class="container">
+
+    <div class="checker-card reveal">
+
+      <div class="checker-title">
+        <i class="fa-solid fa-map-location-dot" style="color:var(--color-primary);margin-right:8px"></i>
+        Znajdź nabór KFS w swoim powiecie
+      </div>
+      <p class="checker-sub">
+        Wpisz nazwę miejscowości lub powiatu, w którym znajduje się Twoja placówka.
+        Sprawdzimy, czy Powiatowy Urząd Pracy ogłosił nabór wniosków KFS w Twoim rejonie.
+      </p>
+
+      <!-- Rate limit indicator (disabled) -->
+      <div class="rate-limit-bar" id="rate-bar" style="display:none"></div>
+
+      <!-- Searchable select -->
+      <div class="select-wrapper" id="select-wrapper">
+        <input
+          type="text"
+          id="powiat-search"
+          class="select-search-input"
+          placeholder="Wpisz nazwę powiatu lub miasta..."
+          autocomplete="off"
+          aria-label="Wyszukaj powiat"
+        />
+        <i class="fa-solid fa-chevron-down select-search-icon" id="select-chevron"></i>
+        <div class="select-dropdown" id="powiat-dropdown" role="listbox"></div>
+      </div>
+
+      <!-- Selected pill -->
+      <div class="selected-powiat-pill" id="selected-pill">
+        <i class="fa-solid fa-location-dot"></i>
+        <span id="pill-name">–</span>
+        <span class="pill-clear" id="pill-clear" title="Wyczyść">
+          <i class="fa-solid fa-xmark"></i>
+        </span>
+      </div>
+
+      <!-- Submit button -->
+      <button
+        class="btn btn-primary checker-btn"
+        id="check-btn"
+        disabled
+        aria-label="Sprawdź terminy naboru KFS"
+      >
+        <i class="fa-solid fa-magnifying-glass"></i>
+        Sprawdź terminy naboru
+      </button>
+
+      <!-- Result -->
+      <div id="result-box" role="status" aria-live="polite"></div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- INFO STRIP -->
+<section class="info-strip">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px">
+      <span class="section-label reveal">Jak to działa?</span>
+      <h2 class="section-title reveal delay-1">Nabory KFS – co warto wiedzieć</h2>
+    </div>
+    <div class="info-strip-grid">
+      <div class="info-item reveal">
+        <div class="info-item-icon green"><i class="fa-solid fa-calendar-days"></i></div>
+        <div class="info-item-title">Terminy są różne w każdym powiecie</div>
+        <div class="info-item-desc">
+          Każdy Powiatowy Urząd Pracy sam ogłasza nabory wniosków KFS –
+          terminy, dostępne środki i priorytety mogą się znacznie różnić.
+        </div>
+      </div>
+      <div class="info-item reveal delay-1">
+        <div class="info-item-icon orange"><i class="fa-solid fa-bolt"></i></div>
+        <div class="info-item-title">Środki kończą się szybko</div>
+        <div class="info-item-desc">
+          Budżet KFS w każdym powiecie jest ograniczony. Wnioski rozpatrywane są
+          w kolejności wpływu – warto działać szybko po ogłoszeniu naboru.
+        </div>
+      </div>
+      <div class="info-item reveal delay-2">
+        <div class="info-item-icon red"><i class="fa-solid fa-file-signature"></i></div>
+        <div class="info-item-title">Pomagamy złożyć wniosek</div>
+        <div class="info-item-desc">
+          Gdy już znasz termin naboru w swoim powiecie, skontaktuj się z nami –
+          przygotujemy dokumentację i złożymy wniosek razem z Tobą.
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:36px">
+      <a href="kontakt.html" class="btn btn-primary">
+        <i class="fa-solid fa-phone"></i> Skontaktuj się z nami
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="contact-strip">
+  <div class="container">
+    <div class="contact-strip-inner">
+      <div class="contact-strip-text">
+        <h2 class="section-title" style="color:#fff">Znasz już termin? Działajmy.</h2>
+        <p>Zadzwoń – przygotujemy dokumenty i złożymy wniosek przed terminem naboru.</p>
+      </div>
+      <a href="tel:+48726697562" class="btn btn-white">
+        <i class="fa-solid fa-phone"></i> +48 726 697 562
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="kontakt" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <img src="Logo/EDUCANDIS_samo.png" alt="Educandis" style="filter:brightness(0) invert(1)" />
+        </a>
+        <p>Profesjonalne szkolenia zawodowe z możliwością dofinansowania z Krajowego Funduszu Szkoleniowego.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Oferta</div>
+        <ul class="footer-links">
+          <li><a href="kursy.html">Kursy i szkolenia</a></li>
+          <li><a href="finansowanie.html">Finansowanie KFS</a></li>
+          <li><a href="powiat.html">Sprawdź nabory KFS</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Informacje</div>
+        <ul class="footer-links">
+          <li><a href="index.html#o-nas">O nas</a></li>
+          <li><a href="#">Polityka prywatności</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Kontakt</div>
+        <ul class="footer-contact-list">
+          <li class="footer-contact-item">
+            <i class="fa-solid fa-phone footer-contact-icon"></i>
+            <a href="tel:+48726697562">+48 726 697 562</a>
+          </li>
+          <li class="footer-contact-item">
+            <i class="fa-solid fa-envelope footer-contact-icon"></i>
+            <a href="mailto:kontakt@educandis.pl">kontakt@educandis.pl</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Educandis. Wszelkie prawa zastrzeżone.</p>
+      <p>Wpisani do <a href="https://stor.praca.gov.pl/portal/" target="_blank" rel="noopener">Rejestru Instytucji Szkoleniowych</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/puzzle.js"></script>
+<script>
+/* ============================================================
+   POWIAT CHECKER
+   ============================================================ */
+
+const WEBHOOK_URL         = 'https://n8n-lw2o6-u65456.vm.elestio.app/webhook/2c27011e-e145-413d-bfc6-1e5d8ca492ee';
+// === PODMIEŃ NA WEBHOOK DO PRZYJMOWANIA KONTAKTÓW ===
+const CONTACT_WEBHOOK_URL = '';
+
+/* ---------- Rate limiting (localStorage, per day) ---------- */
+function getRateData() {
+  try {
+    const raw = localStorage.getItem(RATE_KEY);
+    if (!raw) return { date: today(), count: 0 };
+    const data = JSON.parse(raw);
+    // reset daily
+    if (data.date !== today()) return { date: today(), count: 0 };
+    return data;
+  } catch { return { date: today(), count: 0 }; }
+}
+function saveRateData(data) {
+  try { localStorage.setItem(RATE_KEY, JSON.stringify(data)); } catch {}
+}
+function today() {
+  return new Date().toISOString().slice(0, 10);
+}
+function getRemaining() {
+  return Math.max(0, RATE_LIMIT - getRateData().count);
+}
+function consumeOne() {
+  const d = getRateData();
+  d.count += 1;
+  saveRateData(d);
+}
+
+/* ---------- Update rate indicator UI ---------- */
+function updateRateUI() {
+  const rem = getRemaining();
+  for (let i = 1; i <= RATE_LIMIT; i++) {
+    const dot = document.getElementById('dot-' + i);
+    if (dot) dot.classList.toggle('used', i <= (RATE_LIMIT - rem));
+  }
+  const textEl = document.getElementById('rate-text');
+  if (textEl) textEl.textContent = rem + ' / ' + RATE_LIMIT + ' dziś';
+}
+
+/* ---------- Powiat data ---------- */
+const POWIATY = [
+  {name:"Aleksandrów Kujawski",kod:"ALE"},{name:"Augustów",kod:"AUG"},
+  {name:"Bartoszyce",kod:"BAR"},{name:"Będzin",kod:"BED"},{name:"Bełchatów",kod:"BEL"},
+  {name:"Biała Podlaska",kod:"BIP"},{name:"Białobrzegi",kod:"BIB"},{name:"Białogard",kod:"BIG"},
+  {name:"Białystok",kod:"BIA"},{name:"Bielsko-Biała",kod:"BIE"},{name:"Bielsk Podlaski",kod:"BKP"},
+  {name:"Biłgoraj",kod:"BIL"},{name:"Bochnia",kod:"BOC"},{name:"Bolesławiec",kod:"BOL"},
+  {name:"Braniewo",kod:"BRA"},{name:"Brodnica",kod:"BRO"},{name:"Brzeg",kod:"BRZ"},
+  {name:"Brzesko",kod:"BZK"},{name:"Brzeziny",kod:"BZI"},{name:"Brzozów",kod:"BZO"},
+  {name:"Busko-Zdrój",kod:"BUS"},{name:"Bydgoszcz",kod:"BYD"},{name:"Bytom",kod:"BYT"},
+  {name:"Bytów",kod:"BYW"},{name:"Chełm",kod:"CHE"},{name:"Chełmno",kod:"CHN"},
+  {name:"Chodzież",kod:"CHO"},{name:"Chojnice",kod:"CHJ"},{name:"Chorzów",kod:"CHR"},
+  {name:"Choszczno",kod:"CHS"},{name:"Chrzanów",kod:"CHZ"},{name:"Ciechanów",kod:"CIE"},
+  {name:"Cieszyn",kod:"CIS"},{name:"Czarnków",kod:"CZA"},{name:"Częstochowa",kod:"CZE"},
+  {name:"Człuchów",kod:"CZL"},{name:"Dąbrowa Górnicza",kod:"DAG"},{name:"Dąbrowa Tarnowska",kod:"DAT"},
+  {name:"Dębica",kod:"DEB"},{name:"Drawsko Pomorskie",kod:"DRA"},{name:"Działdowo",kod:"DZI"},
+  {name:"Dzierżoniów",kod:"DZE"},{name:"Elbląg",kod:"ELB"},{name:"Ełk",kod:"ELK"},
+  {name:"Garwolin",kod:"GAR"},{name:"Gdańsk",kod:"GDA"},{name:"Gdynia",kod:"GDY"},
+  {name:"Giżycko",kod:"GIZ"},{name:"Gliwice",kod:"GLI"},{name:"Głogów",kod:"GLO"},
+  {name:"Głubczyce",kod:"GLU"},{name:"Gniezno",kod:"GNI"},{name:"Gołdap",kod:"GOL"},
+  {name:"Goleniów",kod:"GOE"},{name:"Golub-Dobrzyń",kod:"GOD"},{name:"Góra",kod:"GOR"},
+  {name:"Gorlice",kod:"GRL"},{name:"Gorzów Wielkopolski",kod:"GOZ"},{name:"Gostyń",kod:"GOS"},
+  {name:"Gostynin",kod:"GST"},{name:"Grajewo",kod:"GRA"},{name:"Grodzisk Mazowiecki",kod:"GRM"},
+  {name:"Grodzisk Wielkopolski",kod:"GRW"},{name:"Grójec",kod:"GRO"},{name:"Grudziądz",kod:"GRU"},
+  {name:"Gryfice",kod:"GRY"},{name:"Gryfino",kod:"GRF"},{name:"Kraków (GUP)",kod:"GUK"},
+  {name:"Hajnówka",kod:"HAJ"},{name:"Hrubieszów",kod:"HRU"},{name:"Iława",kod:"ILA"},
+  {name:"Inowrocław",kod:"INO"},{name:"Janów Lubelski",kod:"JAN"},{name:"Jarocin",kod:"JAR"},
+  {name:"Jarosław",kod:"JRS"},{name:"Jasło",kod:"JAS"},{name:"Jastrzębie-Zdrój",kod:"JAZ"},
+  {name:"Jawor",kod:"JAW"},{name:"Jaworzno",kod:"JWZ"},{name:"Jędrzejów",kod:"JED"},
+  {name:"Jelenia Góra",kod:"JEL"},{name:"Kalisz",kod:"KAL"},{name:"Kamienna Góra",kod:"KAM"},
+  {name:"Kamień Pomorski",kod:"KAP"},{name:"Kartuzy",kod:"KAR"},{name:"Katowice",kod:"KAT"},
+  {name:"Kazimierza Wielka",kod:"KAZ"},{name:"Kędzierzyn-Koźle",kod:"KED"},{name:"Kępno",kod:"KEP"},
+  {name:"Kętrzyn",kod:"KET"},{name:"Kielce",kod:"KIE"},{name:"Kłobuck",kod:"KLO"},
+  {name:"Kłodzko",kod:"KLD"},{name:"Kluczbork",kod:"KLU"},{name:"Kolbuszowa",kod:"KOL"},
+  {name:"Kolno",kod:"KLN"},{name:"Koło",kod:"KOO"},{name:"Kołobrzeg",kod:"KOB"},
+  {name:"Konin",kod:"KON"},{name:"Końskie",kod:"KOK"},{name:"Kościan",kod:"KOS"},
+  {name:"Kościerzyna",kod:"KSC"},{name:"Koszalin",kod:"KSZ"},{name:"Kozienice",kod:"KOZ"},
+  {name:"Krapkowice",kod:"KRA"},{name:"Kraśnik",kod:"KRS"},{name:"Krasnystaw",kod:"KRY"},
+  {name:"Krosno",kod:"KRO"},{name:"Krosno Odrzańskie",kod:"KRD"},{name:"Krotoszyn",kod:"KRT"},
+  {name:"Kutno",kod:"KUT"},{name:"Kwidzyn",kod:"KWI"},{name:"Łańcut",kod:"LAN"},
+  {name:"Łask",kod:"LAS"},{name:"Lębork",kod:"LEB"},{name:"Łęczna",kod:"LEC"},
+  {name:"Łęczyca",kod:"LEZ"},{name:"Legionowo",kod:"LEG"},{name:"Legnica",kod:"LGN"},
+  {name:"Lesko",kod:"LES"},{name:"Leszno",kod:"LSZ"},{name:"Leżajsk",kod:"LEJ"},
+  {name:"Lidzbark Warmiński",kod:"LID"},{name:"Limanowa",kod:"LIM"},{name:"Lipno",kod:"LIP"},
+  {name:"Lipsko",kod:"LPS"},{name:"Łobez",kod:"LOB"},{name:"Łódź",kod:"LOD"},
+  {name:"Łódź-Wschód",kod:"LDW"},{name:"Łomża",kod:"LOM"},{name:"Łosice",kod:"LOS"},
+  {name:"Łowicz",kod:"LOW"},{name:"Lubaczów",kod:"LCZ"},{name:"Lubań",kod:"LBN"},
+  {name:"Lubartów",kod:"LBR"},{name:"Lubin",kod:"LBI"},{name:"Lublin",kod:"LUB"},
+  {name:"Lubliniec",kod:"LBL"},{name:"Łuków",kod:"LUK"},{name:"Lwówek Śląski",kod:"LWO"},
+  {name:"Maków Mazowiecki",kod:"MAK"},{name:"Malbork",kod:"MAL"},{name:"Miechów",kod:"MIE"},
+  {name:"Międzychód",kod:"MIZ"},{name:"Międzyrzecz",kod:"MIR"},{name:"Mielec",kod:"MIL"},
+  {name:"Mikołów",kod:"MIK"},{name:"Milicz",kod:"MIC"},{name:"Mińsk Mazowiecki",kod:"MIN"},
+  {name:"Mława",kod:"MLA"},{name:"Mogilno",kod:"MOG"},{name:"Mońki",kod:"MON"},
+  {name:"Mrągowo",kod:"MRA"},{name:"Kielce (MUP)",kod:"MKI"},{name:"Lublin (MUP)",kod:"MLU"},
+  {name:"Olsztyn (MUP)",kod:"MOL"},{name:"Płock (MUP)",kod:"MPL"},{name:"Toruń (MUP)",kod:"MTO"},
+  {name:"Myślenice",kod:"MYS"},{name:"Myślibórz",kod:"MYL"},{name:"Mysłowice",kod:"MYO"},
+  {name:"Myszków",kod:"MYZ"},{name:"Nakło nad Notecią",kod:"NAK"},{name:"Namysłów",kod:"NAM"},
+  {name:"Nowy Dwór Gdański",kod:"NDG"},{name:"Nowy Dwór Mazowiecki",kod:"NDM"},
+  {name:"Nidzica",kod:"NID"},{name:"Nisko",kod:"NIS"},{name:"Nowa Sól",kod:"NOS"},
+  {name:"Nowe Miasto Lubawskie",kod:"NML"},{name:"Nowy Sącz",kod:"NSA"},{name:"Nowy Targ",kod:"NTA"},
+  {name:"Nowy Tomyśl",kod:"NTO"},{name:"Nysa",kod:"NYS"},{name:"Oborniki",kod:"OBO"},
+  {name:"Oława",kod:"OLA"},{name:"Olecko",kod:"OLE"},{name:"Oleśnica",kod:"OLN"},
+  {name:"Olesno",kod:"OLS"},{name:"Olkusz",kod:"OLK"},{name:"Opatów",kod:"OPA"},
+  {name:"Opoczno",kod:"OPZ"},{name:"Opole",kod:"OPO"},{name:"Opole Lubelskie",kod:"OPL"},
+  {name:"Ostróda",kod:"OST"},{name:"Ostrołęka",kod:"OSL"},{name:"Ostrowiec Świętokrzyski",kod:"OSW"},
+  {name:"Ostrów Mazowiecka",kod:"OSM"},{name:"Ostrów Wielkopolski",kod:"OWP"},
+  {name:"Ostrzeszów",kod:"OSZ"},{name:"Oświęcim",kod:"OWC"},{name:"Otwock",kod:"OTW"},
+  {name:"Ożarów Mazowiecki",kod:"OZA"},{name:"Pabianice",kod:"PAB"},{name:"Pajęczno",kod:"PAJ"},
+  {name:"Parczew",kod:"PAR"},{name:"Piaseczno",kod:"PIA"},{name:"Piekary Śląskie",kod:"PIE"},
+  {name:"Piła",kod:"PIL"},{name:"Pińczów",kod:"PIN"},{name:"Piotrków Trybunalski",kod:"PIO"},
+  {name:"Pisz",kod:"PIS"},{name:"Pleszew",kod:"PLE"},{name:"Płock",kod:"PLO"},
+  {name:"Płońsk",kod:"PLN"},{name:"Poddębice",kod:"POD"},{name:"Police",kod:"POL"},
+  {name:"Polkowice",kod:"POK"},{name:"Poznań",kod:"POZ"},{name:"Proszowice",kod:"PRO"},
+  {name:"Prudnik",kod:"PRU"},{name:"Pruszków",kod:"PRS"},{name:"Przasnysz",kod:"PRZ"},
+  {name:"Przemyśl",kod:"PRE"},{name:"Przeworsk",kod:"PRW"},{name:"Przysucha",kod:"PZS"},
+  {name:"Pszczyna",kod:"PCZ"},{name:"Puck",kod:"PUC"},{name:"Puławy",kod:"PUL"},
+  {name:"Pułtusk",kod:"PUT"},{name:"Pyrzyce",kod:"PYR"},{name:"Racibórz",kod:"RAC"},
+  {name:"Radom",kod:"RAD"},{name:"Radomsko",kod:"RDS"},{name:"Radziejów",kod:"RAZ"},
+  {name:"Radzyń Podlaski",kod:"RAP"},{name:"Rawa Mazowiecka",kod:"RAW"},{name:"Rawicz",kod:"RWC"},
+  {name:"Ropczyce",kod:"ROP"},{name:"Ruda Śląska",kod:"RUD"},{name:"Rybnik",kod:"RYB"},
+  {name:"Ryki",kod:"RYK"},{name:"Rypin",kod:"RYP"},{name:"Rzeszów",kod:"RZE"},
+  {name:"Sandomierz",kod:"SAN"},{name:"Sanok",kod:"SAK"},{name:"Sejny",kod:"SEJ"},
+  {name:"Sępólno Krajeńskie",kod:"SEP"},{name:"Siedlce",kod:"SIE"},
+  {name:"Siemianowice Śląskie",kod:"SIM"},{name:"Siemiatycze",kod:"SMT"},
+  {name:"Sieradz",kod:"SIR"},{name:"Sierpc",kod:"SRP"},{name:"Skarżysko-Kamienna",kod:"SKA"},
+  {name:"Skierniewice",kod:"SKI"},{name:"Sławno",kod:"SLA"},{name:"Słubice",kod:"SLU"},
+  {name:"Słupca",kod:"SLP"},{name:"Słupsk",kod:"SLS"},{name:"Sochaczew",kod:"SOC"},
+  {name:"Sokółka",kod:"SOK"},{name:"Sokołów Podlaski",kod:"SOP"},{name:"Sosnowiec",kod:"SOS"},
+  {name:"Śrem",kod:"SRE"},{name:"Środa Śląska",kod:"SRS"},{name:"Środa Wielkopolska",kod:"SRW"},
+  {name:"Stalowa Wola",kod:"STA"},{name:"Starachowice",kod:"STR"},{name:"Stargard",kod:"STG"},
+  {name:"Starogard Gdański",kod:"SGD"},{name:"Staszów",kod:"STZ"},
+  {name:"Strzelce Krajeńskie",kod:"STK"},{name:"Strzelce Opolskie",kod:"STO"},
+  {name:"Strzelin",kod:"STL"},{name:"Strzyżów",kod:"STY"},{name:"Sucha Beskidzka",kod:"SUC"},
+  {name:"Sulęcin",kod:"SUL"},{name:"Nowy Sącz (SUP)",kod:"SNS"},{name:"Suwałki",kod:"SUW"},
+  {name:"Świdnica",kod:"SWI"},{name:"Świdnik",kod:"SWD"},{name:"Świdwin",kod:"SWN"},
+  {name:"Świebodzin",kod:"SWE"},{name:"Świecie",kod:"SWC"},{name:"Świętochłowice",kod:"SWT"},
+  {name:"Świnoujście",kod:"SWJ"},{name:"Szamotuły",kod:"SZA"},{name:"Szczecin",kod:"SZC"},
+  {name:"Szczecinek",kod:"SZK"},{name:"Szczytno",kod:"SZT"},{name:"Sztum",kod:"SZM"},
+  {name:"Szydłowiec",kod:"SZY"},{name:"Tarnobrzeg",kod:"TAR"},{name:"Tarnów",kod:"TRN"},
+  {name:"Tarnowskie Góry",kod:"TGO"},{name:"Tczew",kod:"TCZ"},
+  {name:"Tomaszów Lubelski",kod:"TML"},{name:"Tomaszów Mazowiecki",kod:"TMM"},
+  {name:"Toruń",kod:"TOR"},{name:"Trzebnica",kod:"TRZ"},{name:"Tuchola",kod:"TUC"},
+  {name:"Turek",kod:"TUR"},{name:"Tychy",kod:"TYC"},{name:"Kraków (UPP)",kod:"UKR"},
+  {name:"Olsztyn (UPP)",kod:"UOL"},{name:"Ustrzyki Dolne",kod:"UST"},
+  {name:"Wąbrzeźno",kod:"WAB"},{name:"Wadowice",kod:"WAD"},{name:"Wągrowiec",kod:"WAG"},
+  {name:"Wałbrzych",kod:"WAL"},{name:"Wałcz",kod:"WLC"},{name:"Warszawa",kod:"WAR"},
+  {name:"Węgorzewo",kod:"WEG"},{name:"Węgrów",kod:"WGR"},{name:"Wejherowo",kod:"WEJ"},
+  {name:"Wieliczka",kod:"WIE"},{name:"Wieluń",kod:"WIL"},{name:"Wieruszów",kod:"WIR"},
+  {name:"Włocławek",kod:"WLO"},{name:"Włodawa",kod:"WLD"},{name:"Włoszczowa",kod:"WLS"},
+  {name:"Wodzisław Śląski",kod:"WOD"},{name:"Wołomin",kod:"WOM"},{name:"Wołów",kod:"WOL"},
+  {name:"Wolsztyn",kod:"WOZ"},{name:"Wrocław",kod:"WRO"},{name:"Września",kod:"WRZ"},
+  {name:"Wschowa",kod:"WSC"},{name:"Wysokie Mazowieckie",kod:"WYS"},{name:"Wyszków",kod:"WYZ"},
+  {name:"Ząbkowice Śląskie",kod:"ZAB"},{name:"Zabrze",kod:"ZAR"},{name:"Żagań",kod:"ZAG"},
+  {name:"Zakopane",kod:"ZAK"},{name:"Zambrów",kod:"ZAM"},{name:"Zamość",kod:"ZMS"},
+  {name:"Żary",kod:"ZAY"},{name:"Zawiercie",kod:"ZAW"},{name:"Zduńska Wola",kod:"ZDU"},
+  {name:"Zgierz",kod:"ZGI"},{name:"Zgorzelec",kod:"ZGO"},{name:"Zielona Góra",kod:"ZIE"},
+  {name:"Złotoryja",kod:"ZLO"},{name:"Złotów",kod:"ZLT"},{name:"Żnin",kod:"ZNI"},
+  {name:"Żory",kod:"ZOR"},{name:"Żuromin",kod:"ZUR"},{name:"Zwoleń",kod:"ZWO"},
+  {name:"Żyrardów",kod:"ZYR"},{name:"Żywiec",kod:"ZYW"}
+];
+
+/* ---------- UI elements ---------- */
+const searchInput = document.getElementById('powiat-search');
+const dropdown    = document.getElementById('powiat-dropdown');
+const checkBtn    = document.getElementById('check-btn');
+const resultBox   = document.getElementById('result-box');
+const selectedPill = document.getElementById('selected-pill');
+const pillName    = document.getElementById('pill-name');
+const pillClear   = document.getElementById('pill-clear');
+const chevron     = document.getElementById('select-chevron');
+
+let selectedPowiat = null;  // { name, kod }
+let highlightIdx   = -1;
+
+/* ---------- Helpers ---------- */
+function normalize(s) {
+  return s.toLowerCase()
+    .replace(/ą/g,'a').replace(/ć/g,'c').replace(/ę/g,'e').replace(/ł/g,'l')
+    .replace(/ń/g,'n').replace(/ó/g,'o').replace(/ś/g,'s').replace(/ź/g,'z').replace(/ż/g,'z');
+}
+
+function filterPowiaty(q) {
+  const nq = normalize(q.trim());
+  if (!nq) return POWIATY.slice(0, 30);
+  return POWIATY.filter(p => normalize(p.name).includes(nq) || normalize(p.kod).startsWith(nq));
+}
+
+function renderDropdown(items) {
+  highlightIdx = -1;
+  if (items.length === 0) {
+    dropdown.innerHTML = '<div class="select-option-empty">Nie znaleziono powiatu</div>';
+  } else {
+    dropdown.innerHTML = items.map((p, i) =>
+      `<div class="select-option" data-idx="${i}" data-name="${p.name}" data-kod="${p.kod}" role="option">
+        <i class="fa-solid fa-location-dot" style="color:var(--color-primary);margin-right:8px;font-size:.75rem"></i>
+        ${p.name} <span style="color:var(--color-gray);font-size:.75rem;margin-left:4px">${p.kod}</span>
+      </div>`
+    ).join('');
+    dropdown.querySelectorAll('.select-option').forEach(el => {
+      el.addEventListener('click', () => selectPowiat(el.dataset.name, el.dataset.kod));
+    });
+  }
+  dropdown.classList.add('open');
+  chevron.style.transform = 'translateY(-50%) rotate(180deg)';
+}
+
+function closeDropdown() {
+  dropdown.classList.remove('open');
+  chevron.style.transform = 'translateY(-50%) rotate(0deg)';
+}
+
+function selectPowiat(name, kod) {
+  selectedPowiat = { name, kod };
+  searchInput.value = name;
+  pillName.textContent = name;
+  selectedPill.classList.add('visible');
+  checkBtn.disabled = false;
+  closeDropdown();
+  searchInput.blur();
+  resultBox.classList.remove('visible');
+  resultBox.innerHTML = '';
+}
+
+function clearPowiat() {
+  selectedPowiat = null;
+  searchInput.value = '';
+  selectedPill.classList.remove('visible');
+  checkBtn.disabled = true;
+  resultBox.classList.remove('visible');
+  resultBox.innerHTML = '';
+}
+
+/* ---------- Events ---------- */
+searchInput.addEventListener('focus', () => {
+  renderDropdown(filterPowiaty(searchInput.value));
+});
+
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value;
+  selectedPowiat = null;
+  selectedPill.classList.remove('visible');
+  checkBtn.disabled = true;
+  resultBox.classList.remove('visible');
+  resultBox.innerHTML = '';
+  renderDropdown(filterPowiaty(q));
+});
+
+searchInput.addEventListener('keydown', e => {
+  const opts = dropdown.querySelectorAll('.select-option');
+  if (!dropdown.classList.contains('open') || opts.length === 0) return;
+
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    highlightIdx = Math.min(highlightIdx + 1, opts.length - 1);
+    opts.forEach((o, i) => o.classList.toggle('highlighted', i === highlightIdx));
+    opts[highlightIdx]?.scrollIntoView({ block: 'nearest' });
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    highlightIdx = Math.max(highlightIdx - 1, 0);
+    opts.forEach((o, i) => o.classList.toggle('highlighted', i === highlightIdx));
+    opts[highlightIdx]?.scrollIntoView({ block: 'nearest' });
+  } else if (e.key === 'Enter') {
+    e.preventDefault();
+    if (highlightIdx >= 0 && opts[highlightIdx]) {
+      opts[highlightIdx].click();
+    }
+  } else if (e.key === 'Escape') {
+    closeDropdown();
+  }
+});
+
+document.addEventListener('click', e => {
+  if (!document.getElementById('select-wrapper').contains(e.target)) {
+    closeDropdown();
+  }
+});
+
+pillClear.addEventListener('click', clearPowiat);
+
+/* ---------- Check button ---------- */
+checkBtn.addEventListener('click', async () => {
+  if (!selectedPowiat) return;
+
+  // Disable button during fetch
+  checkBtn.disabled = true;
+  checkBtn.innerHTML = '<div class="spinner" style="width:18px;height:18px;border-width:2px;margin:0 auto"></div>';
+
+  resultBox.classList.add('visible');
+  resultBox.innerHTML = `
+    <div class="result-loading">
+      <div class="spinner"></div>
+      Sprawdzam terminy naborów dla <strong>${selectedPowiat.name}</strong>...
+    </div>`;
+
+  try {
+    const res = await fetch(WEBHOOK_URL, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ powiat: selectedPowiat.name, kod: selectedPowiat.kod })
+    });
+
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+
+    let data;
+    const text = await res.text();
+    try { data = JSON.parse(text); } catch { data = { raw: text }; }
+
+    renderResult(data, selectedPowiat.name);
+
+  } catch (err) {
+    renderError(err);
+  } finally {
+    checkBtn.disabled = false;
+    checkBtn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> Sprawdź terminy naboru';
+  }
+});
+
+/* ---------- Result renderers ---------- */
+function renderResult(data, powiatName) {
+  // n8n zwraca HTML bezpośrednio (text/html) → trafia do data.raw
+  const htmlContent = data.html || data.raw || null;
+  if (htmlContent && typeof htmlContent === 'string' && htmlContent.trim().startsWith('<')) {
+    resultBox.innerHTML = htmlContent;
+    const formTypeEl = resultBox.querySelector('[data-form-type]');
+    const formType = formTypeEl?.dataset.formType || 'call';
+    resultBox.innerHTML = htmlContent + buildContactForm(powiatName, formType);
+    attachContactForm(powiatName, formType);
+    return;
+  }
+
+  // Fallback: JSON ze strukturą dat
+  const hasDates = data.daty_naborow || data.terminy || data.nabory || data.dates || data.start_date;
+  if (hasDates) {
+    const dates = data.daty_naborow || data.terminy || data.nabory || data.dates || [];
+    let datesHtml = '';
+    if (Array.isArray(dates) && dates.length > 0) {
+      datesHtml = dates.map(d => {
+        const label = d.label || d.nazwa || d.typ || 'Nabór';
+        const val   = d.data || d.date || d.termin || d;
+        return `<div class="result-date-item">
+          <i class="fa-regular fa-calendar result-date-icon"></i>
+          <div><div class="result-date-label">${label}</div><div class="result-date-value">${val}</div></div>
+        </div>`;
+      }).join('');
+    }
+    resultBox.innerHTML = `
+      <div class="result-success">
+        <div class="result-success-header">
+          <i class="fa-solid fa-circle-check"></i>
+          <strong>${powiatName}</strong>
+        </div>
+        <div class="result-success-body">
+          ${datesHtml ? `<div class="result-dates">${datesHtml}</div>` : ''}
+        </div>
+      </div>` + buildContactForm(powiatName);
+    attachContactForm(powiatName);
+  } else {
+    renderNoData(powiatName);
+  }
+}
+
+function buildContactForm(powiatName, formType) {
+  const ANIM = 'opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;';
+
+  if (formType === 'newsletter') {
+    return `
+    <div class="icf-wrap" id="icf-wrap" style="${ANIM}">
+      <div class="icf-title">Chcę dostać info gdy ruszy nabór w moim PUP</div>
+      <div class="icf-sub">To <strong>nie jest newsletter</strong> – nie będziemy Ci wysyłać spamu. Tylko jedno powiadomienie (e-mail i telefon) gdy Twój Powiatowy Urząd Pracy ogłosi daty naboru KFS.</div>
+      <div class="icf-fields" id="icf-fields">
+        <input type="text"  id="icf-name"  class="icf-input" placeholder="Imię" autocomplete="given-name" />
+        <input type="text"  id="icf-org"   class="icf-input" placeholder="Nazwa placówki / firmy" autocomplete="organization" />
+        <input type="email" id="icf-email" class="icf-input" placeholder="Adres e-mail" autocomplete="email" style="flex-basis:100%" />
+        <input type="tel"   id="icf-phone" class="icf-input" placeholder="Telefon (opcjonalnie)" autocomplete="tel" />
+        <button class="btn btn-primary icf-btn" id="icf-btn">Powiadom mnie o naborze</button>
+      </div>
+      <label class="icf-consent" id="icf-consent-wrap">
+        <input type="checkbox" id="icf-consent" />
+        <span>Wyrażam zgodę na kontakt e-mailowy i telefoniczny z informacją o naborze KFS zgodnie z <a href="polityka-prywatnosci.html" target="_blank">Polityką prywatności</a>.</span>
+      </label>
+      <div class="icf-note" id="icf-note">Jedno powiadomienie – gdy PUP ogłosi daty. Zero spamu.</div>
+    </div>`;
+  }
+
+  return `
+    <div class="icf-wrap" id="icf-wrap" style="${ANIM}">
+      <div class="icf-title">Zostaw kontakt – oddzwonimy</div>
+      <div class="icf-fields" id="icf-fields">
+        <input type="text"  id="icf-name"  class="icf-input" placeholder="Imię" autocomplete="given-name" />
+        <input type="tel"   id="icf-phone" class="icf-input" placeholder="Numer telefonu" autocomplete="tel" />
+        <button class="btn btn-primary icf-btn" id="icf-btn">Oddzwoń do mnie</button>
+      </div>
+      <label class="icf-consent" id="icf-consent-wrap">
+        <input type="checkbox" id="icf-consent" />
+        <span>Wyrażam zgodę na przetwarzanie moich danych osobowych w celu kontaktu telefonicznego zgodnie z <a href="polityka-prywatnosci.html" target="_blank">Polityką prywatności</a>.</span>
+      </label>
+      <div class="icf-note" id="icf-note">Bezpłatna konsultacja · Bez zobowiązań</div>
+    </div>`;
+}
+
+function attachContactForm(powiatName, formType) {
+  const wrap = document.getElementById('icf-wrap');
+  if (wrap) setTimeout(() => { wrap.style.opacity = '1'; wrap.style.transform = 'translateY(0)'; }, 500);
+  const btn    = document.getElementById('icf-btn');
+  const note   = document.getElementById('icf-note');
+  const fields = document.getElementById('icf-fields');
+  if (!btn) return;
+
+  btn.addEventListener('click', async () => {
+    const consent = document.getElementById('icf-consent');
+    const n = document.getElementById('icf-name')?.value.trim();
+
+    if (formType === 'newsletter') {
+      const org   = document.getElementById('icf-org')?.value.trim();
+      const email = document.getElementById('icf-email')?.value.trim();
+      if (!n || !org || !email) {
+        note.textContent = 'Uzupełnij imię, nazwę placówki i adres e-mail.';
+        note.style.color = '#dc2626'; return;
+      }
+      if (!consent?.checked) {
+        note.textContent = 'Zaznacz zgodę na przetwarzanie danych.';
+        note.style.color = '#dc2626'; return;
+      }
+      btn.disabled = true; btn.textContent = 'Zapisuję...';
+      try {
+        const phone = document.getElementById('icf-phone')?.value.trim();
+        await fetch(CONTACT_WEBHOOK_URL, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ typ: 'newsletter', imie: n, placowka: org, email, telefon: phone, powiat: powiatName })
+        });
+      } catch {}
+      fields.innerHTML = `<div class="icf-success"><i class="fa-solid fa-circle-check"></i> Gotowe! Wyślemy e-mail gdy ruszy nabór w ${powiatName}.</div>`;
+      note.textContent = 'Tylko jedna wiadomość – gdy pojawi się nabór.';
+      note.style.color = '';
+
+    } else {
+      const p = document.getElementById('icf-phone')?.value.trim();
+      if (!n || !p) {
+        note.textContent = 'Uzupełnij imię i numer telefonu.';
+        note.style.color = '#dc2626'; return;
+      }
+      if (!consent?.checked) {
+        note.textContent = 'Zaznacz zgodę na przetwarzanie danych.';
+        note.style.color = '#dc2626'; return;
+      }
+      btn.disabled = true; btn.textContent = 'Wysyłam...';
+      try {
+        await fetch(CONTACT_WEBHOOK_URL, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ typ: 'call', imie: n, telefon: p, powiat: powiatName })
+        });
+      } catch {}
+      fields.innerHTML = `<div class="icf-success"><i class="fa-solid fa-circle-check"></i> Dziękujemy ${n}! Oddzwonimy wkrótce.</div>`;
+      note.textContent = 'Zazwyczaj dzwonimy w ciągu kilku godzin w godzinach pracy.';
+      note.style.color = '';
+    }
+  });
+}
+
+function renderNoData(powiatName) {
+  resultBox.innerHTML = `
+    <div class="result-none">
+      <i class="fa-regular fa-calendar-xmark"></i>
+      <p>Brak aktualnych danych o naborach KFS dla powiatu <strong>${powiatName}</strong>.<br />
+      Może to oznaczać, że nabór jeszcze nie został ogłoszony lub środki zostały już rozdysponowane.</p>
+      <a href="kontakt.html" class="btn btn-primary btn-sm" style="margin-top:8px">
+        Zadzwoń – sprawdzimy dla Ciebie
+      </a>
+    </div>`;
+}
+
+function renderError(err) {
+  console.error('Webhook error:', err);
+  resultBox.innerHTML = `
+    <div class="result-error">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <p>Nie udało się pobrać danych. Spróbuj ponownie za chwilę lub
+        <a href="kontakt.html" style="color:var(--color-primary);font-weight:600">skontaktuj się z nami</a>
+        bezpośrednio.
+      </p>
+    </div>`;
+}
+
+function showBlocked() {
+  resultBox.classList.add('visible');
+  resultBox.innerHTML = `
+    <div class="result-blocked">
+      <i class="fa-solid fa-shield-halved" style="font-size:1.5rem;color:#d97706;margin-bottom:8px;display:block"></i>
+      <p><strong>Dzienny limit zapytań wyczerpany (3/3).</strong><br />
+      Możesz sprawdzić ponownie jutro lub
+      <a href="kontakt.html" style="color:#92400e;font-weight:600">zadzwoń do nas</a>
+      – chętnie podamy terminy bezpośrednio.</p>
+    </div>`;
+}
+
+/* ---------- Init ---------- */
+</script>
+</body>
+</html>

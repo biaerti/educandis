@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Educandis – Szkolenia i Dofinansowanie KFS</title>
+  <meta name="description" content="Educandis oferuje profesjonalne szkolenia zawodowe, wsparcie w pozyskaniu dofinansowania z Krajowego Funduszu Szkoleniowego oraz pomoc w rozwoju kariery." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+<!-- ===================== PAGE LOADER ===================== -->
+<div id="page-loader">
+  <div class="loader-logo">Edu<span>candis</span></div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- ===================== MOBILE NAV ===================== -->
+<nav class="mobile-nav" aria-label="Menu mobilne">
+  <a href="#uslugi">Usługi</a>
+  <a href="kursy.html">Kursy</a>
+  <a href="finansowanie.html">Finansowanie KFS</a>
+  <a href="powiat.html">Sprawdź nabory</a>
+  <a href="kontakt.html">Kontakt</a>
+  <a href="powiat.html" class="btn btn-primary">Sprawdź nabory KFS</a>
+</nav>
+
+<!-- ===================== NAVBAR ===================== -->
+<header class="navbar" role="banner">
+  <div class="container">
+    <a href="index.html" class="nav-logo" aria-label="Educandis – strona główna">
+      <img src="Logo/EDUCANDIS_samo.png" alt="Logo Educandis" />
+    </a>
+    <nav class="nav-links" aria-label="Nawigacja główna">
+      <a href="#uslugi">Usługi</a>
+      <a href="kursy.html">Kursy</a>
+      <a href="finansowanie.html">Finansowanie KFS</a>
+      <a href="powiat.html">Sprawdź nabory</a>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+    <a href="powiat.html" class="btn btn-primary nav-cta">
+      Sprawdź nabory KFS <i class="fa-solid fa-arrow-right"></i>
+    </a>
+    <button class="hamburger" aria-label="Otwórz menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="hero" aria-label="Baner główny">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        Certyfikowane szkolenia zawodowe
+      </div>
+      <h1 class="hero-title">
+        Rozwijaj swój<br />
+        <em>potencjał</em> razem<br />
+        z nami
+      </h1>
+      <p class="hero-desc">
+        Prowadzimy certyfikowane szkolenia zawodowe i pomagamy firmom uzyskać
+        dofinansowanie z Krajowego Funduszu Szkoleniowego –
+        <strong style="color:#fff">KFS pokrywa nawet 80% kosztów</strong> szkoleń dla Twoich pracowników.
+      </p>
+      <div class="hero-actions">
+        <a href="finansowanie.html" class="btn btn-primary">
+          <i class="fa-solid fa-coins"></i> Sprawdź dofinansowanie KFS
+        </a>
+        <a href="kursy.html" class="btn btn-outline">
+          <i class="fa-solid fa-graduation-cap"></i> Nasza oferta
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-number"><span data-count="200">0</span><span>+</span></div>
+          <div class="stat-label">Kursów w ofercie</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number"><span data-count="3500">0</span><span>+</span></div>
+          <div class="stat-label">Absolwentów</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number"><span data-count="15">0</span><span> lat</span></div>
+          <div class="stat-label">Doświadczenia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <div class="scroll-mouse"></div>
+    <span>Przewiń</span>
+  </div>
+</section>
+
+<!-- ===================== SERVICES ===================== -->
+<section class="services" id="uslugi" aria-label="Nasze usługi">
+  <div class="container">
+    <div class="services-header">
+      <span class="section-label reveal">Co oferujemy</span>
+      <h2 class="section-title reveal delay-1">Trzy obszary działania</h2>
+      <p class="section-subtitle reveal delay-2">
+        Educandis to kompleksowe wsparcie w szkoleniach zawodowych, rekrutacji
+        i dobrostanie. Każdy obszar prowadzony przez ekspertów z pasją.
+      </p>
+    </div>
+
+    <div class="services-grid">
+
+      <!-- KURSY – aktywne -->
+      <a href="kursy.html" class="service-card service-card--active reveal">
+        <div class="service-icon service-icon--red">
+          <i class="fa-solid fa-book-open"></i>
+        </div>
+        <h3 class="service-card-title">Kursy i Szkolenia</h3>
+        <p class="service-card-desc">
+          Szeroka oferta kursów zawodowych z certyfikatem. Szkolenia stacjonarne,
+          online i hybrydowe. Możliwość dofinansowania nawet do 80% z KFS.
+        </p>
+        <div class="service-card-footer">
+          <span class="service-tag service-tag--active">Dostępne</span>
+          <span class="service-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+      </a>
+
+      <!-- AGENCJA PRACY – wkrótce -->
+      <div class="service-card service-card--inactive reveal delay-2">
+        <div class="service-icon service-icon--gray">
+          <i class="fa-solid fa-briefcase"></i>
+        </div>
+        <h3 class="service-card-title">Agencja Pracy</h3>
+        <p class="service-card-desc">
+          Kompleksowe usługi rekrutacyjne dla pracowników i pracodawców.
+          Dobór kandydatów, outplacement i doradztwo zawodowe.
+        </p>
+        <div class="service-card-footer">
+          <span class="service-tag service-tag--soon">
+            <i class="fa-regular fa-clock"></i> Wkrótce
+          </span>
+        </div>
+      </div>
+
+      <!-- SZKOŁA JOGI – wkrótce -->
+      <div class="service-card service-card--inactive reveal delay-3">
+        <div class="service-icon service-icon--gray">
+          <i class="fa-solid fa-spa"></i>
+        </div>
+        <h3 class="service-card-title">Szkoła Jogi</h3>
+        <p class="service-card-desc">
+          Zajęcia jogi dla każdego – od podstaw po zaawansowane asany.
+          Grupy ogólne, korporacyjne i warsztaty mindfulness.
+        </p>
+        <div class="service-card-footer">
+          <span class="service-tag service-tag--soon">
+            <i class="fa-regular fa-clock"></i> Wkrótce
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== KFS ===================== -->
+<section class="kfs" id="finansowanie" aria-label="Krajowy Fundusz Szkoleniowy">
+  <div class="container">
+    <div class="kfs-inner">
+
+      <!-- Left: text -->
+      <div class="kfs-text reveal-left">
+        <span class="section-label">Dofinansowanie</span>
+        <h2 class="section-title">
+          KFS pokrywa nawet 80%<br />kosztów szkoleń
+        </h2>
+        <p class="section-subtitle">
+          Krajowy Fundusz Szkoleniowy to pieniądze z Funduszu Pracy, które
+          Twoja firma może otrzymać na szkolenia pracowników. Pracodawca składa
+          wniosek do Urzędu Pracy – my pomagamy przez cały proces i
+          przeprowadzamy szkolenie.
+        </p>
+        <div class="kfs-badges" style="margin-top:28px">
+          <span class="kfs-badge">
+            <i class="fa-solid fa-check kfs-badge-icon"></i> Do 100% dla mikroprzedsiębiorstw
+          </span>
+          <span class="kfs-badge">
+            <i class="fa-solid fa-check kfs-badge-icon"></i> Wpisani do Rejestru Instytucji Szkoleniowych
+          </span>
+          <span class="kfs-badge">
+            <i class="fa-solid fa-check kfs-badge-icon"></i> Pomagamy złożyć wniosek bezpłatnie
+          </span>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px">
+          <a href="finansowanie.html" class="btn btn-primary">
+            Jak uzyskać dofinansowanie <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="powiat.html" class="btn btn-dark" style="background:var(--color-dark-mid)">
+            <i class="fa-solid fa-map-location-dot"></i> Sprawdź nabory w swoim powiecie
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: steps -->
+      <div class="kfs-steps reveal-right">
+        <div class="kfs-step">
+          <div class="kfs-step-num">1</div>
+          <div class="kfs-step-body">
+            <div class="kfs-step-title">Skontaktuj się z nami</div>
+            <div class="kfs-step-desc">
+              Zadzwoń lub napisz. Sprawdzimy, czy Twoja firma kwalifikuje się
+              do dofinansowania i jakie szkolenia są aktualnie dostępne w Twoim powiecie.
+            </div>
+          </div>
+        </div>
+        <div class="kfs-step">
+          <div class="kfs-step-num">2</div>
+          <div class="kfs-step-body">
+            <div class="kfs-step-title">Złożenie wniosku do Urzędu Pracy</div>
+            <div class="kfs-step-desc">
+              Przygotujemy kompletną dokumentację i pomożemy złożyć wniosek
+              w Powiatowym Urzędzie Pracy właściwym dla Twojej firmy.
+            </div>
+          </div>
+        </div>
+        <div class="kfs-step">
+          <div class="kfs-step-num">3</div>
+          <div class="kfs-step-body">
+            <div class="kfs-step-title">Realizacja szkolenia</div>
+            <div class="kfs-step-desc">
+              Po pozytywnej decyzji PUP przeprowadzamy szkolenie i zajmujemy się
+              całą dokumentacją rozliczeniową.
+            </div>
+          </div>
+        </div>
+        <div class="kfs-step">
+          <div class="kfs-step-num">4</div>
+          <div class="kfs-step-body">
+            <div class="kfs-step-title">Certyfikat i zwrot kosztów</div>
+            <div class="kfs-step-desc">
+              Uczestnicy otrzymują certyfikaty wpisane do Krajowego Rejestru Szkoleń,
+              a KFS zwraca firmie dofinansowane koszty szkolenia.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PUZZLE / GALLERY ===================== -->
+<section class="puzzle-section" aria-label="Galeria">
+  <div class="container">
+    <div class="puzzle-header">
+      <span class="section-label reveal">W liczbach i obrazach</span>
+      <h2 class="section-title reveal delay-1">Szkolenia, które zmieniają<br />kariery</h2>
+    </div>
+
+    <div class="puzzle-grid">
+      <div class="puzzle-piece puzzle-piece--tall">
+        <img src="Zdjecia/AdobeStock_282835056.jpeg" alt="Szkolenie grupowe" loading="lazy" />
+        <div class="puzzle-piece-overlay">
+          <span class="puzzle-piece-label">Warsztaty grupowe</span>
+        </div>
+      </div>
+      <div class="puzzle-piece puzzle-piece--wide">
+        <img src="Zdjecia/AdobeStock_247538873.jpeg" alt="Profesjonalne szkolenie" loading="lazy" />
+        <div class="puzzle-piece-overlay">
+          <span class="puzzle-piece-label">Profesjonalne szkolenia</span>
+        </div>
+      </div>
+      <div class="puzzle-piece">
+        <img src="Zdjecia/Fotolia_68283562_XS.jpg" alt="Nauka" loading="lazy" />
+        <div class="puzzle-piece-overlay">
+          <span class="puzzle-piece-label">Rozwój kompetencji</span>
+        </div>
+      </div>
+      <div class="puzzle-piece">
+        <img src="Zdjecia/AdobeStock_31208934.jpeg" alt="Certyfikat" loading="lazy" />
+        <div class="puzzle-piece-overlay">
+          <span class="puzzle-piece-label">Certyfikaty</span>
+        </div>
+      </div>
+      <div class="puzzle-piece">
+        <img src="Zdjecia/about-300x200.jpg" alt="Konsultacje" loading="lazy" />
+        <div class="puzzle-piece-overlay">
+          <span class="puzzle-piece-label">Indywidualne konsultacje</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHY US ===================== -->
+<section class="why-us" id="o-nas" aria-label="Dlaczego my">
+  <div class="container">
+    <div class="why-us-header">
+      <span class="section-label" style="color:#ff9089">Dlaczego Educandis</span>
+      <h2 class="section-title reveal">Co nas wyróżnia</h2>
+      <p class="section-subtitle reveal delay-1">
+        Nie jesteśmy kolejną firmą szkoleniową. To, co robimy,
+        robimy z myślą o prawdziwych efektach.
+      </p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-item reveal">
+        <div class="why-item-num">01</div>
+        <div class="why-icon">🎯</div>
+        <div class="why-item-title">Kursy dopasowane do rynku</div>
+        <div class="why-item-desc">
+          Program każdego kursu tworzymy we współpracy z pracodawcami –
+          uczysz się tego, czego faktycznie wymaga rynek pracy.
+        </div>
+      </div>
+      <div class="why-item reveal delay-1">
+        <div class="why-item-num">02</div>
+        <div class="why-icon">📋</div>
+        <div class="why-item-title">Wpisani do RIS i KRZ</div>
+        <div class="why-item-desc">
+          Jesteśmy wpisani do Rejestru Instytucji Szkoleniowych i Krajowego
+          Rejestru Szkoleń – to gwarancja jakości i możliwości dofinansowania z KFS.
+        </div>
+      </div>
+      <div class="why-item reveal delay-2">
+        <div class="why-item-num">03</div>
+        <div class="why-icon">💼</div>
+        <div class="why-item-title">Obsługa KFS od A do Z</div>
+        <div class="why-item-desc">
+          Nasz zespół przeprowadza Cię przez cały proces uzyskania dofinansowania –
+          przygotowujemy dokumenty, kontaktujemy się z urzędem i rozliczamy środki.
+        </div>
+      </div>
+      <div class="why-item reveal delay-1">
+        <div class="why-item-num">04</div>
+        <div class="why-icon">👩‍🏫</div>
+        <div class="why-item-title">Eksperci-praktycy</div>
+        <div class="why-item-desc">
+          Nasi trenerzy to specjaliści z wieloletnim doświadczeniem zawodowym –
+          nie tylko teoria, ale przede wszystkim praktyczne umiejętności.
+        </div>
+      </div>
+      <div class="why-item reveal delay-2">
+        <div class="why-item-num">05</div>
+        <div class="why-icon">🏆</div>
+        <div class="why-item-title">Certyfikaty honorowane przez pracodawców</div>
+        <div class="why-item-desc">
+          Nasze certyfikaty są uznawane przez pracodawców w całej Polsce
+          i Europie dzięki wpisowi do Krajowego Rejestru Kwalifikacji.
+        </div>
+      </div>
+      <div class="why-item reveal delay-3">
+        <div class="why-item-num">06</div>
+        <div class="why-icon">📅</div>
+        <div class="why-item-title">Elastyczne terminy</div>
+        <div class="why-item-desc">
+          Oferujemy szkolenia w trybie dziennym, wieczorowym i weekendowym
+          – dostosowujemy się do Twojego grafiku pracy.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT STRIP ===================== -->
+<section class="contact-strip" aria-label="Zapisz się">
+  <div class="container">
+    <div class="contact-strip-inner">
+      <div class="contact-strip-text">
+        <h2 class="section-title" style="color:#fff">Gotowy na kolejny krok?</h2>
+        <p>Skontaktuj się z nami i sprawdź, jakie kursy możesz sfinansować z KFS.</p>
+      </div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;">
+        <a href="kursy.html" class="btn btn-white">
+          <i class="fa-solid fa-graduation-cap"></i> Przeglądaj kursy
+        </a>
+        <a href="kontakt.html" class="btn btn-outline">
+          Napisz do nas
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer id="kontakt" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+
+      <!-- Brand -->
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <img src="Logo/EDUCANDIS_samo.png" alt="Educandis" style="filter:brightness(0) invert(1)" />
+        </a>
+        <p>
+          Profesjonalne szkolenia zawodowe z możliwością dofinansowania z Krajowego
+          Funduszu Szkoleniowego. Inwestuj w siebie razem z nami.
+        </p>
+      </div>
+
+      <!-- Linki -->
+      <div>
+        <div class="footer-col-title">Oferta</div>
+        <ul class="footer-links">
+          <li><a href="kursy.html">Kursy i szkolenia</a></li>
+          <li><a href="finansowanie.html">Finansowanie KFS</a></li>
+          <li><a href="#uslugi">Agencja Pracy <span style="font-size:.7rem;color:#e34234">wkrótce</span></a></li>
+          <li><a href="#uslugi">Szkoła Jogi <span style="font-size:.7rem;color:#e34234">wkrótce</span></a></li>
+        </ul>
+      </div>
+
+      <!-- Info -->
+      <div>
+        <div class="footer-col-title">Informacje</div>
+        <ul class="footer-links">
+          <li><a href="#o-nas">O nas</a></li>
+          <li><a href="finansowanie.html#krs">Krajowy Rejestr Szkoleń</a></li>
+          <li><a href="#">Polityka prywatności</a></li>
+          <li><a href="#">Regulamin</a></li>
+        </ul>
+      </div>
+
+      <!-- Kontakt -->
+      <div>
+        <div class="footer-col-title">Kontakt</div>
+        <ul class="footer-contact-list">
+          <li class="footer-contact-item">
+            <i class="fa-solid fa-location-dot footer-contact-icon"></i>
+            <span>Pl. Solny 14/3<br />50-062 Wrocław</span>
+          </li>
+          <li class="footer-contact-item">
+            <i class="fa-solid fa-phone footer-contact-icon"></i>
+            <a href="tel:+48726697562">+48 726 697 562</a>
+          </li>
+          <li class="footer-contact-item">
+            <i class="fa-solid fa-envelope footer-contact-icon"></i>
+            <a href="mailto:kontakt@educandis.pl">kontakt@educandis.pl</a>
+          </li>
+          <li class="footer-contact-item">
+            <i class="fa-regular fa-clock footer-contact-icon"></i>
+            <span>Pon–Pt: 8:00–17:00</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Educandis. Wszelkie prawa zastrzeżone.</p>
+      <p>Wpisani do <a href="https://stor.praca.gov.pl/portal/" target="_blank" rel="noopener">Rejestru Instytucji Szkoleniowych</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== SCRIPTS ===================== -->
+<script src="js/main.js"></script>
+<script src="js/puzzle.js"></script>
+</body>
+</html>

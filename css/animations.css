@@ -1,0 +1,162 @@
+/* ============================================
+   EDUCANDIS – animations.css
+   ============================================ */
+
+/* ---------- Scroll reveal base ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .65s ease, transform .65s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(.92);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* stagger delays */
+.delay-1 { transition-delay: .1s !important; }
+.delay-2 { transition-delay: .2s !important; }
+.delay-3 { transition-delay: .3s !important; }
+.delay-4 { transition-delay: .4s !important; }
+.delay-5 { transition-delay: .5s !important; }
+
+/* ---------- Puzzle piece animation ---------- */
+.puzzle-piece {
+  opacity: 0;
+  transform: scale(.85) rotate(var(--puzzle-rot, 0deg));
+  transition:
+    opacity .6s ease,
+    transform .6s ease;
+}
+.puzzle-piece.assembled {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+/* Individual piece rotations – feels hand-placed */
+.puzzle-piece:nth-child(1) { --puzzle-rot: -4deg; transition-delay: .05s; }
+.puzzle-piece:nth-child(2) { --puzzle-rot:  3deg; transition-delay: .12s; }
+.puzzle-piece:nth-child(3) { --puzzle-rot: -2deg; transition-delay: .20s; }
+.puzzle-piece:nth-child(4) { --puzzle-rot:  5deg; transition-delay: .28s; }
+.puzzle-piece:nth-child(5) { --puzzle-rot: -3deg; transition-delay: .14s; }
+.puzzle-piece:nth-child(6) { --puzzle-rot:  2deg; transition-delay: .22s; }
+.puzzle-piece:nth-child(7) { --puzzle-rot: -6deg; transition-delay: .08s; }
+
+/* ---------- Number counter animation ---------- */
+.stat-number { transition: color .4s; }
+
+/* ---------- Nav link underline wipe ---------- */
+@keyframes wipeIn {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+}
+
+/* ---------- Hero parallax hint ---------- */
+@keyframes floatUp {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(-6px); }
+}
+.hero-scroll-hint { animation: floatUp 3s ease-in-out infinite; }
+
+/* ---------- Button shimmer on hover ---------- */
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -60%;
+  width: 40%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+  transform: skewX(-20deg);
+  transition: left .55s ease;
+}
+.btn { position: relative; overflow: hidden; }
+.btn-primary:hover::before { left: 120%; }
+
+/* ---------- Card tilt on hover (JS-driven, CSS fallback) ---------- */
+.service-card { transform-origin: center bottom; }
+
+/* ---------- KFS step pulse ---------- */
+@keyframes stepPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(227,66,52,.35); }
+  70%  { box-shadow: 0 0 0 10px rgba(227,66,52,0); }
+  100% { box-shadow: 0 0 0 0 rgba(227,66,52,0); }
+}
+.kfs-step-num.active { animation: stepPulse 1.8s infinite; }
+
+/* ---------- Page loader ---------- */
+#page-loader {
+  position: fixed;
+  inset: 0;
+  background: var(--color-dark);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  transition: opacity .5s ease, visibility .5s ease;
+}
+#page-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loader-logo {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+}
+.loader-logo span { color: #e34234; }
+.loader-bar {
+  width: 160px; height: 3px;
+  background: rgba(255,255,255,.12);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.loader-bar-fill {
+  height: 100%;
+  width: 0;
+  background: #e34234;
+  border-radius: 2px;
+  animation: loadFill 1s ease forwards;
+}
+@keyframes loadFill {
+  to { width: 100%; }
+}
+
+/* ---------- Smooth section dividers ---------- */
+.wave-divider {
+  line-height: 0;
+  overflow: hidden;
+}
+.wave-divider svg { display: block; }
